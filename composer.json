@@ -1,0 +1,29 @@
+{
+    "name": "leinonen/yii2-monolog-targets",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Juuso Leinonen",
+            "email": "leinonen.juuso@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^1.22",
+        "yiisoft/yii2": "2.0.11.2",
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "leinonen\\Yii2MonologTargets\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "leinonen\\Yii2MonologTargets\\Tests\\": "tests/"
+        }
+    }
+}
