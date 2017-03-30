@@ -1,8 +1,8 @@
 <?php
 
-namespace leinonen\Yii2MonologTargets\Tests\Unit;
+namespace leinonen\Yii2Monolog\Tests\Unit;
 
-use leinonen\Yii2MonologTargets\Yii2LogMessage;
+use leinonen\Yii2Monolog\Yii2LogMessage;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use yii\log\Logger;

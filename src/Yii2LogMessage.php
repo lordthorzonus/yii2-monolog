@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
-namespace leinonen\Yii2MonologTargets;
+namespace leinonen\Yii2Monolog;
 
 
 use Psr\Log\LogLevel;
@@ -50,11 +51,11 @@ class Yii2LogMessage
 
         $this->timestamp = $message[3];
 
-        if ( isset($message[4])) {
+        if (isset($message[4])) {
             $this->trace = $message[4];
         }
 
-        if ( isset($message[5])) {
+        if (isset($message[5])) {
             $this->memory = $message[5];
         }
     }

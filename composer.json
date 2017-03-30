@@ -1,5 +1,5 @@
 {
-    "name": "leinonen/yii2-monolog-targets",
+    "name": "leinonen/yii2-monolog",
     "type": "yii2-extension",
     "license": "MIT",
     "authors": [
@@ -10,20 +10,21 @@
     ],
     "require": {
         "monolog/monolog": "^1.22",
-        "yiisoft/yii2": "2.0.11.2",
-        "php": "^7.0"
+        "yiisoft/yii2": "~2.0.11",
+        "php": "^7.0",
+        "mockery/mockery": "0.9.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
     },
     "autoload": {
         "psr-4": {
-            "leinonen\\Yii2MonologTargets\\": "src/"
+            "leinonen\\Yii2Monolog\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "leinonen\\Yii2MonologTargets\\Tests\\": "tests/"
+            "leinonen\\Yii2Monolog\\Tests\\": "tests/"
         }
     }
 }
