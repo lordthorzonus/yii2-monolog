@@ -36,6 +36,11 @@ class Yii2LogMessage
     private $timestamp;
 
     /**
+     * @var int|mixed
+     */
+    private $yiiLogLevel;
+
+    /**
      * Initializes a new Yii2LogMessage.
      *
      * @param array $message

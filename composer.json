@@ -1,6 +1,7 @@
 {
     "name": "leinonen/yii2-monolog",
     "type": "yii2-extension",
+    "description": "Monolog extension for Yii2",
     "license": "MIT",
     "authors": [
         {
