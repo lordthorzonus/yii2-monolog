@@ -72,9 +72,9 @@ class ReflectionStrategyTest extends TestCase
         $parameters = $strategy->getConstructorParameters($config);
 
         $this->assertSame(1, $parameters[0]);
-        $this->assertTrue($parameters[1]);
-        $this->assertInstanceOf(DummyClass::class, $parameters[2]);
-        $this->assertSame(1, $parameters[2]->getParam());
+        $this->assertInstanceOf(DummyClass::class, $parameters[1]);
+        $this->assertTrue($parameters[2]);
+        $this->assertSame(1, $parameters[1]->getParam());
     }
 
     /** @test */
@@ -89,9 +89,9 @@ class ReflectionStrategyTest extends TestCase
         $parameters = $strategy->getConstructorParameters($config);
 
         $this->assertSame(1, $parameters[0]);
-        $this->assertTrue($parameters[1]);
-        $this->assertInstanceOf(DummyClass::class, $parameters[2]);
-        $this->assertSame(2, $parameters[2]->getParam());
+        $this->assertInstanceOf(DummyClass::class, $parameters[1]);
+        $this->assertTrue($parameters[2]);
+        $this->assertSame(2, $parameters[1]->getParam());
     }
 
     /** @test */
@@ -155,7 +155,7 @@ class NoOptionalParameters
 
 class TypeHintedHandler
 {
-    public function __construct($required, $optional, DummyClass $typehinted)
+    public function __construct($required, DummyClass $typehinted, $optional = true)
     {
     }
 }
