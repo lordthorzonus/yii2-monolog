@@ -2,10 +2,10 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit;
 
-use leinonen\Yii2Monolog\Yii2LogMessage;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LogLevel;
 use yii\log\Logger;
+use Psr\Log\LogLevel;
+use PHPUnit\Framework\TestCase;
+use leinonen\Yii2Monolog\Yii2LogMessage;
 
 class Yii2LogMessageTest extends TestCase
 {
@@ -18,7 +18,7 @@ class Yii2LogMessageTest extends TestCase
             'application',
             10,
             $this->getDummyStackTrace(),
-            123
+            123,
         ];
 
         $logMessage = new Yii2LogMessage($message);
@@ -29,7 +29,7 @@ class Yii2LogMessageTest extends TestCase
             [
                 'category' => 'application',
                 'trace' => $this->getDummyStackTrace(),
-                'memory' => 123
+                'memory' => 123,
             ],
             $logMessage->getContext()
         );
@@ -47,7 +47,7 @@ class Yii2LogMessageTest extends TestCase
             'application',
             10,
             $this->getDummyStackTrace(),
-            123
+            123,
         ];
 
         $logMessage = new Yii2LogMessage($message);
@@ -109,7 +109,7 @@ class Yii2LogMessageTest extends TestCase
             'line' => 62,
             'function' => 'log',
             'class' => Logger::class,
-            'type' => '->'
+            'type' => '->',
         ];
 
         return $trace;

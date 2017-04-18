@@ -1,8 +1,6 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Factories;
-
 
 use Monolog\Formatter\FormatterInterface;
 
@@ -37,6 +35,7 @@ class FormatterFactory
     public function make(string $formatterClass, array $config = []): FormatterInterface
     {
         $this->validateFormatter($formatterClass);
+
         return $this->genericFactory->makeWithStrategy($formatterClass, $config);
     }
 

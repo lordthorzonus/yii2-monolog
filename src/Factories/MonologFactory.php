@@ -1,12 +1,10 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Factories;
 
-
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use Monolog\Handler\HandlerInterface;
+use Monolog\Formatter\FormatterInterface;
 
 class MonologFactory
 {
@@ -102,6 +100,7 @@ class MonologFactory
                 $processors = $this->getProcessorsFromHandlerConfig($handlerConfig);
 
                 unset($handlerConfig['formatter'], $handlerConfig['processors']);
+
                 return $this->handlerFactory->make($handlerClass, $handlerConfig, $formatter, $processors);
             }
         );
@@ -138,7 +137,7 @@ class MonologFactory
     }
 
     /**
-     * Maps the given configurations with the given callable
+     * Maps the given configurations with the given callable.
      *
      * @param array $config
      * @param callable $mapFunction
@@ -182,8 +181,6 @@ class MonologFactory
                 }
             )[0];
         }
-
-        return null;
     }
 
     /**

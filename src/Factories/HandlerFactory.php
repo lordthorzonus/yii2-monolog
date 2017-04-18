@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\Factories;
 
-use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\HandlerInterface;
+use Monolog\Formatter\FormatterInterface;
 
 class HandlerFactory
 {
@@ -46,11 +48,11 @@ class HandlerFactory
         /** @var HandlerInterface $handler */
         $handler = $this->genericFactory->makeWithStrategy($handlerClass, $config);
 
-        if($formatter !== null) {
+        if ($formatter !== null) {
             $handler->setFormatter($formatter);
         }
 
-        if(! empty($processors)) {
+        if (! empty($processors)) {
             foreach ($processors as $processor) {
                 $handler->pushProcessor($processor);
             }
@@ -73,5 +75,4 @@ class HandlerFactory
             throw new \InvalidArgumentException("{$handlerClass} doesn't implement {$handlerInterface}");
         }
     }
-
 }

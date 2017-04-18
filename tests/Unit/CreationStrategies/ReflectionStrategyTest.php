@@ -1,12 +1,10 @@
 <?php
 
-
 namespace leinonen\Yii2MonogTargets\Tests\Unit\CreationStrategies;
 
-
-use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
-use PHPUnit\Framework\TestCase;
 use Yii;
+use PHPUnit\Framework\TestCase;
+use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
 
 class ReflectionStrategyTest extends TestCase
 {
@@ -30,7 +28,6 @@ class ReflectionStrategyTest extends TestCase
 
         $strategy = new ReflectionStrategy(NoOptionalParameters::class);
         $this->assertSame([1, 2], $strategy->getConstructorParameters($config));
-
     }
 
     /** @test */
@@ -68,7 +65,7 @@ class ReflectionStrategyTest extends TestCase
     public function it_should_resolve_typehinted_classes_from_yiis_di_container_if_possible()
     {
         $config = [
-            'required' => 1
+            'required' => 1,
         ];
 
         $strategy = new ReflectionStrategy(TypeHintedHandler::class);
@@ -78,7 +75,6 @@ class ReflectionStrategyTest extends TestCase
         $this->assertTrue($parameters[1]);
         $this->assertInstanceOf(DummyClass::class, $parameters[2]);
         $this->assertSame(1, $parameters[2]->getParam());
-
     }
 
     /** @test */
@@ -136,12 +132,10 @@ class ReflectionStrategyTest extends TestCase
     }
 }
 
-
 class TwoRequiredParameters
 {
     public function __construct($required1, $required2, $optional = '1')
     {
-
     }
 }
 
@@ -149,7 +143,6 @@ class OneRequiredParameter
 {
     public function __construct($required1, $optional1 = null, $optional2 = true, $optional3 = 1)
     {
-
     }
 }
 
@@ -157,15 +150,13 @@ class NoOptionalParameters
 {
     public function __construct($required1, $required2)
     {
-
     }
 }
 
 class TypeHintedHandler
 {
-    public function __construct($required, $optional = true, DummyClass $typehinted)
+    public function __construct($required, $optional, DummyClass $typehinted)
     {
-
     }
 }
 
@@ -173,7 +164,6 @@ class TypeHintedInterfaceHandler
 {
     public function __construct(DummyInterface $typehinted)
     {
-
     }
 }
 
@@ -196,15 +186,12 @@ class DummyClass implements DummyInterface
     {
         return $this->param;
     }
-
 }
 
 class NoConstructor
 {
-
 }
 
 interface DummyInterface
 {
-
 }
