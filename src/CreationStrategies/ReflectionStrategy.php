@@ -46,7 +46,7 @@ class ReflectionStrategy implements CreationStrategyInterface
 
         return \array_map(
             function (ReflectionParameter $parameter) {
-                return $parameter->getName();
+                return $parameter->name;
             },
             $requiredParameters
         );
@@ -90,7 +90,7 @@ class ReflectionStrategy implements CreationStrategyInterface
     private function resolveConstructorParameterValue(ReflectionParameter $constructorParameter, array $config)
     {
         foreach ($config as $parameterName => $configuredParameterValue) {
-            if ($constructorParameter->getName() === $parameterName) {
+            if ($constructorParameter->name === $parameterName) {
                 return $configuredParameterValue;
             }
         }
@@ -100,11 +100,11 @@ class ReflectionStrategy implements CreationStrategyInterface
         }
 
         if ($constructorParameter->hasType() && ! $constructorParameter->getType()->isBuiltin()) {
-            return \Yii::$container->get($constructorParameter->getClass()->getName());
+            return \Yii::$container->get($constructorParameter->getClass()->name);
         }
 
         throw new InvalidArgumentException(
-            "Expected to find key: '{$constructorParameter->getName()}' in the given config array but none found."
+            "Expected to find key: '{$constructorParameter->name}' in the given config array but none found."
         );
     }
 }
