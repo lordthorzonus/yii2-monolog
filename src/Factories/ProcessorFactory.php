@@ -1,12 +1,9 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Factories;
-
 
 class ProcessorFactory
 {
-
     /**
      * @var GenericStrategyBasedFactory
      */
@@ -41,7 +38,7 @@ class ProcessorFactory
     }
 
     /**
-     * Validates the given processor class
+     * Validates the given processor class.
      *
      * @param $processorClass
      *
@@ -49,7 +46,7 @@ class ProcessorFactory
      */
     private function validateProcessorClass(string $processorClass)
     {
-        if(! (new \ReflectionClass($processorClass))->hasMethod('__invoke')) {
+        if (! (new \ReflectionClass($processorClass))->hasMethod('__invoke')) {
             throw new \InvalidArgumentException("{$processorClass} isn't callable. All processor classes must implement the __invoke method.");
         }
     }

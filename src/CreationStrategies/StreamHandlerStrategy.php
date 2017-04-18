@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-
 use Monolog\Logger;
 
 class StreamHandlerStrategy implements CreationStrategyInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRequiredParameters(): array
     {
         return [
-            'path'
+            'path',
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getConstructorParameters(array $config): array
     {

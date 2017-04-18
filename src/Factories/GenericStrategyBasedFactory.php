@@ -1,13 +1,11 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Factories;
 
-
-use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
-use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
 use Yii;
 use yii\base\InvalidConfigException;
+use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
+use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
 
 class GenericStrategyBasedFactory
 {
@@ -65,8 +63,7 @@ class GenericStrategyBasedFactory
         CreationStrategyInterface $strategy,
         string $className,
         array $config
-    ): void
-    {
+    ): void {
         $requiredParameters = $strategy->getRequiredParameters();
         $givenParameters = \array_keys($config);
 

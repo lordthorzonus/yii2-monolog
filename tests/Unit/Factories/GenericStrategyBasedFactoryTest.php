@@ -1,17 +1,15 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
-
-use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
-use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
-use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
-use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
-use Monolog\Handler\StreamHandler;
+use Mockery as m;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
-use Mockery as m;
+use Monolog\Handler\StreamHandler;
+use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
+use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
+use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
+use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
 
 class GenericStrategyBasedFactoryTest extends TestCase
 {
@@ -29,7 +27,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
             'level' => Logger::WARNING,
             'bubble' => false,
             'filePermissions' => 'something',
-            'useLocking' => true
+            'useLocking' => true,
         ];
 
         $mockStreamHandlerCreationStrategy = m::mock(StreamHandlerStrategy::class);
@@ -41,7 +39,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
                 Logger::WARNING,
                 false,
                 'something',
-                true
+                true,
             ]);
 
         $mockStrategyResolver = m::mock(StrategyResolver::class);

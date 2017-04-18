@@ -1,15 +1,11 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
-
-use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
-use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
-use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
-use leinonen\Yii2Monolog\Factories\ProcessorFactory;
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
+use leinonen\Yii2Monolog\Factories\ProcessorFactory;
+use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 
 class ProcessorFactoryTest extends TestCase
 {
@@ -23,7 +19,7 @@ class ProcessorFactoryTest extends TestCase
     public function it_can_make_a_processor()
     {
         $config = [
-            'required' => true
+            'required' => true,
         ];
 
         $mockDummyProcessor = m::mock(DummyProcessor::class);
@@ -51,20 +47,15 @@ class ProcessorFactoryTest extends TestCase
 
         $factory->make(NonCallable::class);
     }
-
 }
-
 
 class DummyProcessor
 {
     public function __invoke()
     {
-
     }
 }
 
-
 class NonCallable
 {
-
 }

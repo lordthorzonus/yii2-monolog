@@ -1,21 +1,19 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
-use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
-use leinonen\Yii2Monolog\Factories\HandlerFactory;
-use leinonen\Yii2Monolog\Yii2LogMessage;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Monolog\Processor\GitProcessor;
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
+use Monolog\Logger;
+use PHPUnit\Framework\TestCase;
+use Monolog\Handler\StreamHandler;
+use Monolog\Processor\GitProcessor;
+use Monolog\Formatter\LineFormatter;
+use leinonen\Yii2Monolog\Yii2LogMessage;
+use leinonen\Yii2Monolog\Factories\HandlerFactory;
+use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 
 class HandlerFactoryTest extends TestCase
 {
-
     protected function tearDown()
     {
         m::close();
@@ -30,7 +28,7 @@ class HandlerFactoryTest extends TestCase
             'level' => Logger::WARNING,
             'bubble' => false,
             'filePermissions' => 'something',
-            'useLocking' => true
+            'useLocking' => true,
         ];
 
         $mockStreamHandler = m::mock(StreamHandler::class);
@@ -47,7 +45,6 @@ class HandlerFactoryTest extends TestCase
         $this->assertSame($mockStreamHandler, $handler);
     }
 
-
     /**
      * @test
      * @expectedException \InvalidArgumentException
@@ -63,7 +60,6 @@ class HandlerFactoryTest extends TestCase
     /** @test */
     public function it_can_make_the_handler_with_a_specific_formatter()
     {
-
         $lineFormatter = new LineFormatter();
 
         $mockStreamHandler = m::mock(StreamHandler::class);
@@ -87,7 +83,7 @@ class HandlerFactoryTest extends TestCase
             function ($record) {
                 return $record;
             },
-            new GitProcessor()
+            new GitProcessor(),
         ];
 
         $mockStreamHandler = m::mock(StreamHandler::class);

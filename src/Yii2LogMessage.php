@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog;
 
-
-use Psr\Log\LogLevel;
 use yii\log\Logger;
+use Psr\Log\LogLevel;
 
 class Yii2LogMessage
 {
@@ -50,7 +49,7 @@ class Yii2LogMessage
         $this->message = $message[0];
         $this->yiiLogLevel = $message[1];
 
-        if  (isset($message[2])) {
+        if (isset($message[2])) {
             $this->category = $message[2];
         }
 
@@ -98,11 +97,11 @@ class Yii2LogMessage
             $context['category'] = $this->category;
         }
 
-        if($this->trace !== null) {
+        if ($this->trace !== null) {
             $context['trace'] = $this->trace;
         }
 
-        if($this->memory !== null) {
+        if ($this->memory !== null) {
             $context['memory'] = $this->memory;
         }
 
