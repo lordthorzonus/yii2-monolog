@@ -52,10 +52,8 @@ class HandlerFactory
             $handler->setFormatter($formatter);
         }
 
-        if (! empty($processors)) {
-            foreach ($processors as $processor) {
-                $handler->pushProcessor($processor);
-            }
+        foreach ($processors as $processor) {
+            $handler->pushProcessor($processor);
         }
 
         return $handler;
