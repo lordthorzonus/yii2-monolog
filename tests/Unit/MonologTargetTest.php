@@ -1,17 +1,14 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit;
 
-
-use leinonen\Yii2Monolog\Factories\MonologFactory;
-use leinonen\Yii2Monolog\MonologTarget;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use PHPUnit\Framework\TestCase;
-
 use Mockery as m;
+use Monolog\Logger;
 use Psr\Log\LogLevel;
+use PHPUnit\Framework\TestCase;
+use Monolog\Handler\StreamHandler;
+use leinonen\Yii2Monolog\MonologTarget;
+use leinonen\Yii2Monolog\Factories\MonologFactory;
 
 class MonologTargetTest extends TestCase
 {
@@ -42,7 +39,7 @@ class MonologTargetTest extends TestCase
                 'application',
                 10,
                 null,
-                123
+                123,
             ],
             [
                 'message2',
@@ -50,8 +47,8 @@ class MonologTargetTest extends TestCase
                 'application',
                 10,
                 null,
-                123
-            ]
+                123,
+            ],
         ];
 
         $this->assertNull($target->export());
@@ -68,14 +65,14 @@ class MonologTargetTest extends TestCase
     {
         $handlerConfig = [
             StreamHandler::class => [
-                'path' => 'something'
-            ]
+                'path' => 'something',
+            ],
         ];
 
         $processorConfig = [
             function ($record) {
                 return $record;
-            }
+            },
         ];
 
         $mockMonologFactory = m::mock(MonologFactory::class);
@@ -83,7 +80,7 @@ class MonologTargetTest extends TestCase
             [
                 'test',
                 $handlerConfig,
-                $processorConfig
+                $processorConfig,
             ]
         )->andReturn($monologLogger);
 
@@ -92,7 +89,7 @@ class MonologTargetTest extends TestCase
             [
                 'channel' => 'test',
                 'handlers' => $handlerConfig,
-                'processors' => $processorConfig
+                'processors' => $processorConfig,
             ]
         );
 

@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog;
 
-use leinonen\Yii2Monolog\Factories\MonologFactory;
 use Monolog\Logger;
 use yii\log\Target;
+use leinonen\Yii2Monolog\Factories\MonologFactory;
 
 class MonologTarget extends Target
 {
@@ -38,7 +40,6 @@ class MonologTarget extends Target
      *
      * @param MonologFactory $monologFactory
      * @param array $config
-     *
      */
     public function __construct(MonologFactory $monologFactory, $config = [])
     {
@@ -47,7 +48,7 @@ class MonologTarget extends Target
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @throws \InvalidArgumentException
      * @throws \yii\base\InvalidConfigException
      */
@@ -63,7 +64,7 @@ class MonologTarget extends Target
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function export()
     {

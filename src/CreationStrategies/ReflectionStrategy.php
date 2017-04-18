@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-
-use InvalidArgumentException;
 use ReflectionParameter;
+use InvalidArgumentException;
 
 class ReflectionStrategy implements CreationStrategyInterface
 {
@@ -24,7 +23,6 @@ class ReflectionStrategy implements CreationStrategyInterface
     {
         $this->handlerReflectionClass = new \ReflectionClass($class);
     }
-
 
     /**
      * Returns required parameter names as array.

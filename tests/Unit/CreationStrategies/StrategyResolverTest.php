@@ -2,12 +2,12 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit\HandlerCreationStrategies;
 
-use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
-use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
-use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
-use leinonen\Yii2Monolog\Yii2LogMessage;
-use Monolog\Handler\StreamHandler;
 use PHPUnit\Framework\TestCase;
+use Monolog\Handler\StreamHandler;
+use leinonen\Yii2Monolog\Yii2LogMessage;
+use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
+use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
+use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
 
 class StrategyResolverTest extends TestCase
 {

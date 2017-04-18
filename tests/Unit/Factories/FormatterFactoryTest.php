@@ -1,15 +1,13 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
-
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
+use Monolog\Formatter\LineFormatter;
+use leinonen\Yii2Monolog\Yii2LogMessage;
 use leinonen\Yii2Monolog\Factories\FormatterFactory;
 use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
-use leinonen\Yii2Monolog\Yii2LogMessage;
-use Monolog\Formatter\LineFormatter;
-use PHPUnit\Framework\TestCase;
-use Mockery as m;
 
 class FormatterFactoryTest extends TestCase
 {
@@ -23,7 +21,7 @@ class FormatterFactoryTest extends TestCase
     public function it_can_make_a_formatter()
     {
         $config = [
-            'key' => 'value'
+            'key' => 'value',
         ];
 
         $mockLineFormatter = m::mock(LineFormatter::class);

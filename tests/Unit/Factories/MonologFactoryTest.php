@@ -1,24 +1,19 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
-
-use leinonen\Yii2Monolog\Factories\FormatterFactory;
-use leinonen\Yii2Monolog\Factories\HandlerFactory;
-use leinonen\Yii2Monolog\Factories\MonologFactory;
-use leinonen\Yii2Monolog\Factories\ProcessorFactory;
+use Mockery as m;
+use Monolog\Logger;
+use PHPUnit\Framework\TestCase;
+use Monolog\Handler\StreamHandler;
+use Monolog\Processor\GitProcessor;
+use Monolog\Processor\TagProcessor;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\BrowserConsoleHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Monolog\Processor\GitProcessor;
-use Monolog\Processor\GitProcessorTest;
-use Monolog\Processor\ProcessIdProcessor;
-use Monolog\Processor\TagProcessor;
-use PHPUnit\Framework\TestCase;
-use Mockery as m;
-
+use leinonen\Yii2Monolog\Factories\HandlerFactory;
+use leinonen\Yii2Monolog\Factories\MonologFactory;
+use leinonen\Yii2Monolog\Factories\FormatterFactory;
+use leinonen\Yii2Monolog\Factories\ProcessorFactory;
 
 class MonologFactoryTest extends TestCase
 {
@@ -88,7 +83,7 @@ class MonologFactoryTest extends TestCase
                     StreamHandler::class,
                     ['path' => 'app.log'],
                     $mockLineFormatter,
-                    [$mockGitProcessor, $mockTagProcessor]
+                    [$mockGitProcessor, $mockTagProcessor],
                 ]
             )
             ->andReturn($mockStreamHandler);
@@ -108,23 +103,22 @@ class MonologFactoryTest extends TestCase
                     'path' => 'app.log',
                     'formatter' => [
                         LineFormatter::class => [
-                            'key' => 'value'
-                        ]
+                            'key' => 'value',
+                        ],
                     ],
                     'processors' => [
                         GitProcessor::class,
                         TagProcessor::class => [
-                            'tags' => [1, 2]
-                        ]
-                    ]
+                            'tags' => [1, 2],
+                        ],
+                    ],
                 ],
-                BrowserConsoleHandler::class
+                BrowserConsoleHandler::class,
             ]
         );
 
         $this->assertSame([$mockStreamHandler, $mockBrowserConsoleHandler], $monologLogger->getHandlers());
     }
-
 
     /** @test */
     public function it_assigns_processors_array_correctly_to_the_logger_under_making()
@@ -149,9 +143,9 @@ class MonologFactoryTest extends TestCase
             [
                 GitProcessor::class,
                 TagProcessor::class => [
-                    'tags' => [1, 2]
+                    'tags' => [1, 2],
                 ],
-                $dummyCallable
+                $dummyCallable,
             ]
         );
 
