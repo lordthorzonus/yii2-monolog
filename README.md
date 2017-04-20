@@ -1,6 +1,6 @@
 ## Yii2 Monolog
 
-Yii2 Monolog allows one to use [Monolog](https://github.com/Seldaek/monolog) easily with algolia. For instructions regarding Monolog itself please refer to the [documentation](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md).
+Yii2 Monolog allows one to use [Monolog](https://github.com/Seldaek/monolog) easily with Yii2. For instructions regarding Monolog itself please refer to the [documentation](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md).
 
 Table of contents
 =================
