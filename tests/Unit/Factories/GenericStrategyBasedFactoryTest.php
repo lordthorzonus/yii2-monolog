@@ -82,6 +82,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
         $handler = $factory->makeWithStrategy(StreamHandler::class, $config);
 
         $this->assertInstanceOf(StreamHandler::class, $handler);
+        $this->assertSame($createdHandler, $handler);
         $this->assertSame('app.log', $handler->getUrl());
         $this->assertSame(Logger::WARNING, $handler->getLevel());
         $this->assertFalse($handler->getBubble());
