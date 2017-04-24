@@ -2,6 +2,7 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
+use Yii;
 use Mockery as m;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +11,6 @@ use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
 use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
 use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
-use Yii;
 
 class GenericStrategyBasedFactoryTest extends TestCase
 {
@@ -75,7 +75,6 @@ class GenericStrategyBasedFactoryTest extends TestCase
             ->with(StreamHandler::class)
             ->once()
             ->andReturn($mockStreamHandlerCreationStrategy);
-
 
         $factory = new GenericStrategyBasedFactory($mockStrategyResolver);
         $handler = $factory->makeWithStrategy(StreamHandler::class, $config);
