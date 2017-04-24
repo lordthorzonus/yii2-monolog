@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-use Monolog\Handler\HandlerInterface;
-use Monolog\Formatter\FormatterInterface;
-
 interface CreationStrategyInterface
 {
     /**

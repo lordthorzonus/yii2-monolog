@@ -1,13 +1,11 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit\HandlerCreationStrategies;
 
-
-use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
+use Monolog\Handler\StreamHandler;
+use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
 
 class StreamHandlerStrategyTest extends TestCase
 {
@@ -18,7 +16,7 @@ class StreamHandlerStrategyTest extends TestCase
         $constructorParameters = (new \ReflectionClass(StreamHandler::class))->getConstructor()->getParameters();
 
         foreach ($constructorParameters as $constructorParameter) {
-            if (!$constructorParameter->isOptional()) {
+            if (! $constructorParameter->isOptional()) {
                 // We want to call the stream parameter path as Symfony does the same in it's Monolog config.
                 if ($constructorParameter->name === 'stream') {
                     $requiredParameters[] = 'path';
@@ -40,7 +38,7 @@ class StreamHandlerStrategyTest extends TestCase
             'level' => Logger::WARNING,
             'bubble' => false,
             'filePermission' => 'some',
-            'useLocking' => true
+            'useLocking' => true,
         ];
 
         $strategy = new StreamHandlerStrategy();
@@ -50,7 +48,7 @@ class StreamHandlerStrategyTest extends TestCase
                 Logger::WARNING,
                 false,
                 'some',
-                true
+                true,
             ],
             $strategy->getConstructorParameters($config)
         );
@@ -71,7 +69,7 @@ class StreamHandlerStrategyTest extends TestCase
         }
 
         $config = [
-            'path' => 'a stream'
+            'path' => 'a stream',
         ];
 
         $strategy = new StreamHandlerStrategy();
@@ -84,7 +82,7 @@ class StreamHandlerStrategyTest extends TestCase
         \Yii::setAlias('@myAlias', '/awesome');
 
         $config = [
-            'path' => '@myAlias/test'
+            'path' => '@myAlias/test',
         ];
         $strategy = new StreamHandlerStrategy();
 
