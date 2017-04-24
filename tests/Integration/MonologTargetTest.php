@@ -1,16 +1,13 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Integration;
 
-
-use leinonen\Yii2Monolog\MonologTarget;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\TestHandler;
-use PHPUnit\Framework\TestCase;
-use yii\log\Dispatcher;
 use yii\log\Logger;
-
+use yii\log\Dispatcher;
+use PHPUnit\Framework\TestCase;
+use Monolog\Handler\TestHandler;
+use Monolog\Formatter\LineFormatter;
+use leinonen\Yii2Monolog\MonologTarget;
 
 class MonologTargetTest extends TestCase
 {
@@ -36,17 +33,17 @@ class MonologTargetTest extends TestCase
                         TestHandler::class => [
                             'formatter' => [
                                 LineFormatter::class => [
-                                    'format' => "myPrefix %channel%.%level_name%: %message% %context% %extra%\n"
-                                ]
+                                    'format' => "myPrefix %channel%.%level_name%: %message% %context% %extra%\n",
+                                ],
                             ],
                             'processors' => [
                                 function ($record) {
                                     $record['context']['specialValue'] = 'special';
 
                                     return $record;
-                                }
-                            ]
-                        ]
+                                },
+                            ],
+                        ],
                     ],
                     'processors' => [
                         function ($record) {
@@ -55,11 +52,11 @@ class MonologTargetTest extends TestCase
                             return $record;
                         },
                         ConfigurableProcessor::class => [
-                            'value' => 'changed value'
-                        ]
-                    ]
-                ]
-            ]
+                            'value' => 'changed value',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $logger->log('my message', Logger::LEVEL_WARNING);
