@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Handler\HandlerInterface;
 use ReflectionParameter;
 use InvalidArgumentException;
 
@@ -25,9 +27,7 @@ class ReflectionStrategy implements CreationStrategyInterface
     }
 
     /**
-     * Returns required parameter names as array.
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getRequiredParameters(): array
     {
@@ -53,13 +53,7 @@ class ReflectionStrategy implements CreationStrategyInterface
     }
 
     /**
-     * @param array $config
-     *
-     * @return array
-     *
-     * @throws \yii\di\NotInstantiableException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \InvalidArgumentException
+     * {@inheritdoc}
      */
     public function getConstructorParameters(array $config): array
     {
@@ -73,6 +67,14 @@ class ReflectionStrategy implements CreationStrategyInterface
             },
             $this->handlerReflectionClass->getConstructor()->getParameters()
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigurationCallable(array $config): callable
+    {
+        return $config['configure'] ?? function ($instance) { return $instance; };
     }
 
     /**
@@ -107,4 +109,5 @@ class ReflectionStrategy implements CreationStrategyInterface
             "Expected to find key: '{$constructorParameter->name}' in the given config array but none found."
         );
     }
+
 }

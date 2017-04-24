@@ -25,12 +25,10 @@ class GenericStrategyBasedFactory
     }
 
     /**
-     * Makes the given class with the given strategy and config.
+     * Makes the given class with config utilizing the resolved strategy based on class.
      *
      * @param string $className
      * @param array $config
-     * @param CreationStrategyInterface|null $strategy If no strategy given the correct strategy will be resolved using
-     * StrategyResolver
      *
      * @see StrategyResolver::resolve()
      *
@@ -39,15 +37,15 @@ class GenericStrategyBasedFactory
      */
     public function makeWithStrategy(
         string $className,
-        array $config = [],
-        CreationStrategyInterface $strategy = null
+        array $config = []
     ) {
-        if ($strategy === null) {
-            $strategy = $this->strategyResolver->resolve($className);
-        }
+        $strategy = $this->strategyResolver->resolve($className);
         $this->validateConfigParameters($strategy, $className, $config);
 
-        return Yii::$container->get($className, $strategy->getConstructorParameters($config));
+        $instance = Yii::$container->get($className, $strategy->getConstructorParameters($config));
+        $configure = $strategy->getConfigurationCallable($config);
+
+        return $configure($instance, $config);
     }
 
     /**

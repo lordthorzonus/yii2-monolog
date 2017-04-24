@@ -76,7 +76,7 @@ class MonologTarget extends Target
     /**
      * @param array $handlers
      */
-    public function setHandlers(array $handlers): void
+    public function setHandlers(array $handlers)
     {
         $this->handlers = $handlers;
     }
@@ -84,7 +84,7 @@ class MonologTarget extends Target
     /**
      * @param array $processors
      */
-    public function setProcessors(array $processors): void
+    public function setProcessors(array $processors)
     {
         $this->processors = $processors;
     }
@@ -92,7 +92,7 @@ class MonologTarget extends Target
     /**
      * @param string $channel
      */
-    public function setChannel(string $channel): void
+    public function setChannel(string $channel)
     {
         $this->channel = $channel;
     }

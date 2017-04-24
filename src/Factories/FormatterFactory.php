@@ -46,7 +46,7 @@ class FormatterFactory
      *
      * @throws \InvalidArgumentException
      */
-    private function validateFormatter(string $formatterClass): void
+    private function validateFormatter(string $formatterClass)
     {
         $formatterInterface = FormatterInterface::class;
         if (! (new \ReflectionClass($formatterClass))->implementsInterface($formatterInterface)) {

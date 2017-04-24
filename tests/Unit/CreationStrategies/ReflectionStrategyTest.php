@@ -5,9 +5,16 @@ namespace leinonen\Yii2MonogTargets\Tests\Unit\CreationStrategies;
 use Yii;
 use PHPUnit\Framework\TestCase;
 use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
+use Mockery as m;
 
 class ReflectionStrategyTest extends TestCase
 {
+    public function tearDown()
+    {
+        m::close();
+        parent::tearDown();
+    }
+
     /** @test */
     public function it_can_return_required_parameters_based_on_the_given_class_constructor()
     {
@@ -116,6 +123,35 @@ class ReflectionStrategyTest extends TestCase
 
         $this->assertSame([], $strategy->getRequiredParameters());
         $this->assertSame([], $strategy->getConstructorParameters($config));
+    }
+
+    /** @test */
+    public function it_should_use_the_given_configure_callable_from_config()
+    {
+        $testArgument = new \StdClass;
+        $callbackAssessor = m::mock(\StdClass::class);
+        $callbackAssessor->shouldReceive('doSomething')->once()->with($testArgument);
+
+        $config = [
+            'configure' => function ($instance) use ($testArgument, $callbackAssessor) {
+                $this->assertSame($testArgument, $instance);
+                $callbackAssessor->doSomething($testArgument);
+            }
+        ];
+
+        $strategy = new ReflectionStrategy(NoConstructor::class);
+        $configure = $strategy->getConfigurationCallable($config);
+        $configure($testArgument);
+    }
+
+    /** @test */
+    public function if_no_configure_key_given_the_default_configuration_callable_should_just_return_the_given_instance()
+    {
+        $testArgument = new \StdClass;
+        $strategy = new ReflectionStrategy(NoConstructor::class);
+        $configure = $strategy->getConfigurationCallable([]);
+
+        $this->assertSame($testArgument, $configure($testArgument));
     }
 
     /**

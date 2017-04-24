@@ -31,4 +31,14 @@ class StreamHandlerStrategy implements CreationStrategyInterface
 
         return [$stream, $level, $bubble, $filePermission, $useLocking];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigurationCallable(array $config): callable
+    {
+        return function ($instance) {
+            return $instance;
+        };
+    }
 }

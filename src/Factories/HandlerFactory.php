@@ -66,7 +66,7 @@ class HandlerFactory
      *
      * @throws \InvalidArgumentException
      */
-    private function validateHandler(string $handlerClass): void
+    private function validateHandler(string $handlerClass)
     {
         $handlerInterface = HandlerInterface::class;
         if (! (new \ReflectionClass($handlerClass))->implementsInterface($handlerInterface)) {
