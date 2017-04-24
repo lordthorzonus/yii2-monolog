@@ -3,9 +3,9 @@
 namespace leinonen\Yii2MonogTargets\Tests\Unit\CreationStrategies;
 
 use Yii;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
-use Mockery as m;
 
 class ReflectionStrategyTest extends TestCase
 {
@@ -136,7 +136,7 @@ class ReflectionStrategyTest extends TestCase
             'configure' => function ($instance) use ($testArgument, $callbackAssessor) {
                 $this->assertSame($testArgument, $instance);
                 $callbackAssessor->doSomething($testArgument);
-            }
+            },
         ];
 
         $strategy = new ReflectionStrategy(NoConstructor::class);

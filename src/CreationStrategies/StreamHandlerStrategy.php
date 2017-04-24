@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class StreamHandlerStrategy implements CreationStrategyInterface
 {

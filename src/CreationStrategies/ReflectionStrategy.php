@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Handler\HandlerInterface;
 use ReflectionParameter;
 use InvalidArgumentException;
 
@@ -74,7 +72,9 @@ class ReflectionStrategy implements CreationStrategyInterface
      */
     public function getConfigurationCallable(array $config): callable
     {
-        return $config['configure'] ?? function ($instance) { return $instance; };
+        return $config['configure'] ?? function ($instance) {
+            return $instance;
+        };
     }
 
     /**
@@ -109,5 +109,4 @@ class ReflectionStrategy implements CreationStrategyInterface
             "Expected to find key: '{$constructorParameter->name}' in the given config array but none found."
         );
     }
-
 }
