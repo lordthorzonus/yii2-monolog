@@ -8,9 +8,9 @@ use leinonen\Yii2Monolog\MonologTarget;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\TestHandler;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LogLevel;
 use yii\log\Dispatcher;
 use yii\log\Logger;
+
 
 class MonologTargetTest extends TestCase
 {
@@ -53,7 +53,10 @@ class MonologTargetTest extends TestCase
                             $record['extra']['test'] = 'testvalue';
 
                             return $record;
-                        }
+                        },
+                        ConfigurableProcessor::class => [
+                            'value' => 'changed value'
+                        ]
                     ]
                 ]
             ]
@@ -69,6 +72,7 @@ class MonologTargetTest extends TestCase
         $this->assertSame('someChannel', $testMessage1['channel']);
         $this->assertSame('application', $testMessage1['context']['category']);
         $this->assertSame('special', $testMessage1['context']['specialValue']);
+        $this->assertSame('changed value', $testMessage1['context']['configuredValue']);
         $this->assertSame(['test' => 'testvalue'], $testMessage1['extra']);
         $this->assertTrue(is_int($testMessage1['context']['memory']));
         $this->assertTrue(is_array($testMessage1['context']['trace']));
@@ -83,6 +87,7 @@ class MonologTargetTest extends TestCase
         $this->assertSame('someChannel', $testMessage2['channel']);
         $this->assertSame('custom category', $testMessage2['context']['category']);
         $this->assertSame('special', $testMessage2['context']['specialValue']);
+        $this->assertSame('changed value', $testMessage2['context']['configuredValue']);
         $this->assertSame(['test' => 'testvalue'], $testMessage2['extra']);
         $this->assertTrue(is_int($testMessage2['context']['memory']));
         $this->assertTrue(is_array($testMessage2['context']['trace']));
@@ -90,5 +95,22 @@ class MonologTargetTest extends TestCase
         $this->assertContains('myPrefix', $testMessage2['formatted']);
         $this->assertContains('someChannel.ERROR: second message', $testMessage2['formatted']);
         $this->assertContains('{"test":"testvalue"}', $testMessage2['formatted']);
+    }
+}
+
+class ConfigurableProcessor
+{
+    private $value;
+
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+
+    public function __invoke(array $record)
+    {
+        $record['context']['configuredValue'] = $this->value;
+
+        return $record;
     }
 }
