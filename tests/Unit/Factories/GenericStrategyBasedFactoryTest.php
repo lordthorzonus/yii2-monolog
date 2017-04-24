@@ -2,6 +2,8 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\BrowserConsoleHandler;
 use Yii;
 use Mockery as m;
 use Monolog\Logger;
@@ -109,5 +111,74 @@ class GenericStrategyBasedFactoryTest extends TestCase
 
         $factory = new GenericStrategyBasedFactory($mockStrategyResolver);
         $handler = $factory->makeWithStrategy(StreamHandler::class, $config);
+    }
+
+    /**
+     * @test
+     * @expectedException \yii\base\InvalidConfigException
+     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got stdClass
+     */
+    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_not_the_instantiated_class()
+    {
+        $config = [
+            'configure' => function (BrowserConsoleHandler $instance) {
+                return new \StdClass;
+            }
+        ];
+
+        $factory = new GenericStrategyBasedFactory(new StrategyResolver());
+        $factory->makeWithStrategy(BrowserConsoleHandler::class, $config);
+    }
+
+    /**
+     * @test
+     * @expectedException \yii\base\InvalidConfigException
+     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got NULL
+     */
+    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_null()
+    {
+        $config = [
+            'configure' => function (BrowserConsoleHandler $instance) {
+                $instance->setFormatter(new LineFormatter());
+            }
+        ];
+
+        $factory = new GenericStrategyBasedFactory(new StrategyResolver());
+        $factory->makeWithStrategy(BrowserConsoleHandler::class, $config);
+    }
+
+
+    /**
+     * @test
+     * @expectedException \yii\base\InvalidConfigException
+     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got string
+     */
+    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_string()
+    {
+        $config = [
+            'configure' => function (BrowserConsoleHandler $instance) {
+                return 'instance';
+            }
+        ];
+
+        $factory = new GenericStrategyBasedFactory(new StrategyResolver());
+        $factory->makeWithStrategy(BrowserConsoleHandler::class, $config);
+    }
+
+    /**
+     * @test
+     * @expectedException \yii\base\InvalidConfigException
+     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got int
+     */
+    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_int()
+    {
+        $config = [
+            'configure' => function (BrowserConsoleHandler $instance) {
+                return 1;
+            }
+        ];
+
+        $factory = new GenericStrategyBasedFactory(new StrategyResolver());
+        $factory->makeWithStrategy(BrowserConsoleHandler::class, $config);
     }
 }

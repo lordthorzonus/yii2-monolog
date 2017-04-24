@@ -70,12 +70,14 @@ class MonologTargetTest extends TestCase
 
         $this->assertSame('my message', $testMessage1['message']);
         $this->assertSame('someChannel', $testMessage1['channel']);
+        // Yii's category is included in context
         $this->assertSame('application', $testMessage1['context']['category']);
         $this->assertSame('special', $testMessage1['context']['specialValue']);
         $this->assertSame('changed value', $testMessage1['context']['configuredValue']);
         $this->assertSame(['test' => 'testvalue'], $testMessage1['extra']);
         $this->assertTrue(is_int($testMessage1['context']['memory']));
         $this->assertTrue(is_array($testMessage1['context']['trace']));
+        // Log level is converted to Monolog level.
         $this->assertSame(\Monolog\Logger::WARNING, $testMessage1['level']);
         $this->assertContains('myPrefix', $testMessage1['formatted']);
         $this->assertContains('someChannel.WARNING: my message', $testMessage1['formatted']);
@@ -85,12 +87,14 @@ class MonologTargetTest extends TestCase
 
         $this->assertSame('second message', $testMessage2['message']);
         $this->assertSame('someChannel', $testMessage2['channel']);
+        // Yii's category is included in context
         $this->assertSame('custom category', $testMessage2['context']['category']);
         $this->assertSame('special', $testMessage2['context']['specialValue']);
         $this->assertSame('changed value', $testMessage2['context']['configuredValue']);
         $this->assertSame(['test' => 'testvalue'], $testMessage2['extra']);
         $this->assertTrue(is_int($testMessage2['context']['memory']));
         $this->assertTrue(is_array($testMessage2['context']['trace']));
+        // Log level is converted to Monolog level.
         $this->assertSame(\Monolog\Logger::ERROR, $testMessage2['level']);
         $this->assertContains('myPrefix', $testMessage2['formatted']);
         $this->assertContains('someChannel.ERROR: second message', $testMessage2['formatted']);

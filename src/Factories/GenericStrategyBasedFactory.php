@@ -2,6 +2,8 @@
 
 namespace leinonen\Yii2Monolog\Factories;
 
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Handler\HandlerInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
@@ -45,7 +47,10 @@ class GenericStrategyBasedFactory
         $instance = Yii::$container->get($className, $strategy->getConstructorParameters($config));
         $configure = $strategy->getConfigurationCallable($config);
 
-        return $configure($instance, $config);
+        $configuredInstance = $configure($instance, $config);
+        $this->validateConfiguredInstance($configuredInstance, $className);
+
+        return $configuredInstance;
     }
 
     /**
@@ -71,6 +76,33 @@ class GenericStrategyBasedFactory
                     "The parameter '{$requiredParameter}' is required for {$className}"
                 );
             }
+        }
+    }
+
+    /**
+     * @param HandlerInterface|FormatterInterface|callable $configuredInstance
+     * @param string $className
+     *
+     * @throws InvalidConfigException
+     */
+    private function validateConfiguredInstance($configuredInstance, string $className)
+    {
+        if (! \is_object($configuredInstance)) {
+           throw new InvalidConfigException(
+               \sprintf(
+                   'The return value of the configure callable must be an instance of %s got %s',
+                   $className,
+                   \gettype($configuredInstance)
+               )
+           );
+        }
+
+        $instanceClassName = (new \ReflectionClass($configuredInstance))->name;
+
+        if ($instanceClassName !== $className) {
+            throw new InvalidConfigException(
+                "The return value of the configure callable must be an instance of {$className} got {$instanceClassName}"
+            );
         }
     }
 }
