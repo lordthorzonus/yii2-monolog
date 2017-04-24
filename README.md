@@ -10,7 +10,7 @@ Table of contents
     * [Handlers](#handlers)
     * [Formatters](#formatters)
     * [Processors](#processors)
-    * [Configuring Handlers/Formatters/Processors after creation]()
+    * [Configuring Handlers/Formatters/Processors after creation](#configuring-handlersformattersprocessors-after-creation)
 
 ## Installation
 Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
