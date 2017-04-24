@@ -10,6 +10,7 @@ Table of contents
     * [Handlers](#handlers)
     * [Formatters](#formatters)
     * [Processors](#processors)
+    * [Configuring Handlers/Formatters/Processors after creation]()
 
 ## Installation
 Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
@@ -146,3 +147,21 @@ Or config to a specific handler:
 ```
 
 You can find available processors from the [Monolog/Processor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor) namespace.
+
+### Configuring Handlers/Formatters/Processors after creation
+For further customisation it's possible to specify a `configure` key for all classes that are created with `leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy` . The configure key must be a callable which receives the created class instance and config. It also has to return the instance. It is called just after the class has been resolved from Yii's DI container.
+For example it's possible to customize `Monolog\Handler\RotatingFileHandler`'s filename format:
+
+```php
+'handlers' => [
+    RotatingFileHandler::class => [
+        'filename' => 'something',
+        'maxFiles' => 2,
+        'configure' => function (RotatingFileHandler $handler, $config) {
+            $handler->setFilenameFormat('myprefix-{filename}-{date}', 'Y-m-d');
+
+            return $instance;
+        }
+    ],
+]
+```

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 class StreamHandlerStrategy implements CreationStrategyInterface
@@ -37,7 +38,7 @@ class StreamHandlerStrategy implements CreationStrategyInterface
      */
     public function getConfigurationCallable(array $config): callable
     {
-        return function ($instance) {
+        return function (StreamHandler $instance) {
             return $instance;
         };
     }
