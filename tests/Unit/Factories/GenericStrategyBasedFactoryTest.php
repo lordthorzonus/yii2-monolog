@@ -2,13 +2,13 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit\Factories;
 
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\BrowserConsoleHandler;
 use Yii;
 use Mockery as m;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\BrowserConsoleHandler;
 use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
 use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
@@ -124,7 +124,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 return new \StdClass;
-            }
+            },
         ];
 
         $factory = new GenericStrategyBasedFactory(new StrategyResolver());
@@ -141,13 +141,12 @@ class GenericStrategyBasedFactoryTest extends TestCase
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 $instance->setFormatter(new LineFormatter());
-            }
+            },
         ];
 
         $factory = new GenericStrategyBasedFactory(new StrategyResolver());
         $factory->makeWithStrategy(BrowserConsoleHandler::class, $config);
     }
-
 
     /**
      * @test
@@ -159,7 +158,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 return 'instance';
-            }
+            },
         ];
 
         $factory = new GenericStrategyBasedFactory(new StrategyResolver());
@@ -176,7 +175,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 return 1;
-            }
+            },
         ];
 
         $factory = new GenericStrategyBasedFactory(new StrategyResolver());
