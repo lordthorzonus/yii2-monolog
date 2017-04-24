@@ -61,7 +61,7 @@ class GenericStrategyBasedFactory
         CreationStrategyInterface $strategy,
         string $className,
         array $config
-    ): void {
+    ) {
         $requiredParameters = $strategy->getRequiredParameters();
         $givenParameters = \array_keys($config);
 
