@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
+use Illuminate\Support\Collection;
 use ReflectionParameter;
 use InvalidArgumentException;
 
@@ -33,21 +34,15 @@ class ReflectionStrategy implements CreationStrategyInterface
             return [];
         }
 
-        $requiredParameters = \array_values(
-            \array_filter(
-                $this->handlerReflectionClass->getConstructor()->getParameters(),
-                function (ReflectionParameter $constructorParameter) {
-                    return ! $constructorParameter->isOptional();
-                }
-            )
-        );
-
-        return \array_map(
-            function (ReflectionParameter $parameter) {
-                return $parameter->name;
-            },
-            $requiredParameters
-        );
+        return $this->getReflectionParametersFromReflectionClass()->reject(
+            function (ReflectionParameter $constructorParameter) {
+                return $constructorParameter->isOptional();
+            }
+        )->map(
+            function (ReflectionParameter $constructorParameter) {
+                return $constructorParameter->name;
+            }
+        )->all();
     }
 
     /**
@@ -59,12 +54,11 @@ class ReflectionStrategy implements CreationStrategyInterface
             return [];
         }
 
-        return array_map(
+        return $this->getReflectionParametersFromReflectionClass()->map(
             function (ReflectionParameter $constructorParameter) use ($config) {
                 return $this->resolveConstructorParameterValue($constructorParameter, $config);
-            },
-            $this->handlerReflectionClass->getConstructor()->getParameters()
-        );
+            }
+        )->all();
     }
 
     /**
@@ -108,5 +102,15 @@ class ReflectionStrategy implements CreationStrategyInterface
         throw new InvalidArgumentException(
             "Expected to find key: '{$constructorParameter->name}' in the given config array but none found."
         );
+    }
+
+    /**
+     * Returns the constructor parameters from the reflection class the strategy was initiated with.
+     *
+     * @return ReflectionParameter[]|Collection
+     */
+    private function getReflectionParametersFromReflectionClass()
+    {
+        return collect($this->handlerReflectionClass->getConstructor()->getParameters());
     }
 }

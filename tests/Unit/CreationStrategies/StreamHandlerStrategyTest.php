@@ -6,25 +6,34 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Monolog\Handler\StreamHandler;
 use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
+use ReflectionClass;
+use ReflectionParameter;
 
 class StreamHandlerStrategyTest extends TestCase
 {
     /** @test */
     public function it_returns_correct_required_parameters_for_a_stream_handler()
     {
-        $requiredParameters = [];
-        $constructorParameters = (new \ReflectionClass(StreamHandler::class))->getConstructor()->getParameters();
+        $constructorParameters = collect(
+            (new ReflectionClass(StreamHandler::class))
+                ->getConstructor()
+                ->getParameters()
+        );
 
-        foreach ($constructorParameters as $constructorParameter) {
-            if (! $constructorParameter->isOptional()) {
+        $requiredParameters = $constructorParameters->reject(
+            function (ReflectionParameter $constructorParameter) {
+                return $constructorParameter->isOptional();
+            }
+        )->map(
+            function (ReflectionParameter $constructorParameter) {
                 // We want to call the stream parameter path as Symfony does the same in it's Monolog config.
                 if ($constructorParameter->name === 'stream') {
-                    $requiredParameters[] = 'path';
-                } else {
-                    $requiredParameters[] = $constructorParameter->name;
+                    return 'path';
                 }
+
+                return $constructorParameter->name;
             }
-        }
+        )->all();
 
         $strategy = new StreamHandlerStrategy();
         $this->assertSame($requiredParameters, $strategy->getRequiredParameters());
@@ -60,7 +69,7 @@ class StreamHandlerStrategyTest extends TestCase
         $expectedValues = [];
         // First constructor parameter is stream which is required
         $expectedValues[] = 'a stream';
-        $constructorParameters = (new \ReflectionClass(StreamHandler::class))->getConstructor()->getParameters();
+        $constructorParameters = (new ReflectionClass(StreamHandler::class))->getConstructor()->getParameters();
 
         foreach ($constructorParameters as $constructorParameter) {
             if ($constructorParameter->isOptional()) {
