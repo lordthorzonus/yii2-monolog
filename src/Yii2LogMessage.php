@@ -111,9 +111,9 @@ class Yii2LogMessage
     /**
      * Returns the PSR-3 compliant log level.
      *
-     * @return int
+     * @return string
      */
-    public function getPsr3LogLevel(): int
+    public function getPsr3LogLevel(): string
     {
         $psrLevels = [
             Logger::LEVEL_ERROR => LogLevel::ERROR,
