@@ -89,7 +89,7 @@ class Yii2LogMessage
      *
      * @return array
      */
-    public function getContext()
+    public function getContext(): array
     {
         $context = [];
 
@@ -113,7 +113,7 @@ class Yii2LogMessage
      *
      * @return int
      */
-    public function getPsr3LogLevel()
+    public function getPsr3LogLevel(): int
     {
         $psrLevels = [
             Logger::LEVEL_ERROR => LogLevel::ERROR,
