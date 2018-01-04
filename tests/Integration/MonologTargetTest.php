@@ -6,9 +6,7 @@ use leinonen\Yii2Monolog\Tests\Helpers\ExampleYii2MonologConfiguration;
 use leinonen\Yii2Monolog\Yii2Monolog;
 use Yii;
 use yii\log\Logger;
-use yii\log\Dispatcher;
 use Monolog\Handler\TestHandler;
-use Monolog\Formatter\LineFormatter;
 use leinonen\Yii2Monolog\MonologTarget;
 
 class MonologTargetTest extends TestCase
