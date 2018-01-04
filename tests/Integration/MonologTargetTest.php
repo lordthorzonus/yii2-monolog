@@ -13,14 +13,21 @@ use leinonen\Yii2Monolog\MonologTarget;
 
 class MonologTargetTest extends TestCase
 {
-    /** @test */
-    public function it_should_be_a_functioning_yii_log_target()
+    /**
+     * @var TestHandler
+     */
+    private $handler;
+
+    /**
+     * @inheritdoc
+     */
+    public function setUp()
     {
         // We want to access the Test Handler to assert everything works
-        // So let's configure it into DI as it's resolved from there
-        $handler = new TestHandler();
-        \Yii::$container->set(TestHandler::class, function () use ($handler) {
-            return $handler;
+        // So let's configure it into DI as it's resolved from there during the creation of the Monolog logger.
+        $this->handler = new TestHandler();
+        \Yii::$container->set(TestHandler::class, function () {
+            return $this->handler;
         });
 
         $channelName = 'someChannel';
@@ -35,23 +42,29 @@ class MonologTargetTest extends TestCase
                 ],
                 'log' => [
                     'targets' => [
-                         [
+                        [
                             'class' => MonologTarget::class,
                             'channel' => $channelName,
                             'levels' => ['error', 'warning']
-                         ],
+                        ],
                     ]
-        ]
-        ],
+                ]
+            ],
         ]);
 
+        parent::setUp();
+    }
+
+    /** @test */
+    public function it_should_be_a_functioning_yii_log_target()
+    {
         $logger = Yii::$app->log->getLogger();
 
         $logger->log('my message', Logger::LEVEL_WARNING);
         $logger->log('second message', Logger::LEVEL_ERROR, 'custom category');
         $logger->flush(true);
 
-        $testMessage1 = $handler->getRecords()[0];
+        $testMessage1 = $this->handler->getRecords()[0];
 
         $this->assertSame('my message', $testMessage1['message']);
         $this->assertSame('someChannel', $testMessage1['channel']);
@@ -68,7 +81,7 @@ class MonologTargetTest extends TestCase
         $this->assertContains('someChannel.WARNING: my message', $testMessage1['formatted']);
         $this->assertContains('{"test":"testvalue"}', $testMessage1['formatted']);
 
-        $testMessage2 = $handler->getRecords()[1];
+        $testMessage2 = $this->handler->getRecords()[1];
 
         $this->assertSame('second message', $testMessage2['message']);
         $this->assertSame('someChannel', $testMessage2['channel']);
