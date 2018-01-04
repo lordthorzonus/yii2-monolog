@@ -20,9 +20,9 @@ composer require leinonen/yii2-monolog
 ```
 
 ## Configuration
-Configure the `leinonen\Yii2Monolog\MonologTarget` as a Log target in your application config.
+Configure the `leinonen\Yii2Monolog\Yii2Monolog` as a bootstrapped component in your application config.
 
-Example configuration with a basic StreamHandler and a UidProcessor:
+Example configuration of one log channel called `myLoggerChannel` with a basic StreamHandler and a UidProcessor:
 ```php
 use leinonen\Yii2Monolog\MonologTarget;
 use Monolog\Handler\StreamHandler;
@@ -32,18 +32,18 @@ use Monolog\Processor\UidProcessor;
 [
     'components' => [
         ...
-        'log' => [
-            'targets' => [
-                'class' => MonologTarget::class,
-                'channel' => 'MyChannel',
-                'handlers' => [
-                    StreamHandler::class => [
-                        'path' => '@app/runtime/logs/someLog.log',
+        'monolog' => [
+            'channels' => [
+                'myLoggerChannel => [
+                    'handlers' => [
+                        StreamHandler::class => [
+                            'path' => '@app/runtime/logs/someLog.log',
+                        ],
+                    ],
+                    'processors' => [
+                        UidProcessor::class,
                     ],
                 ],
-                'processors' => [
-                    UidProcessor::class,
-                ]
             ],
         ],
     ],
@@ -59,22 +59,24 @@ Example handler configuration with a stack of two handlers:
 ```php
 [
     ...
-    'log' => [
-        'targets' => [
-            'class' => MonologTarget::class,
-            'handlers' => [
-                SlackbotHandler::class => [
-                    'slackTeam' => 'myTeam',
-                    'token' => 'mySecretSlackToken',
-                    'channel' => 'myChannel',
+        'monolog' => [
+            'channels' => [
+                'myLoggerChannel => [
+                    'handlers' => [
+                        SlackbotHandler::class => [
+                            'slackTeam' => 'myTeam',
+                            'token' => 'mySecretSlackToken',
+                            'channel' => 'myChannel',
+                        ],
+                        RotatingFileHandler::class => [
+                            'path' => '@app/runtime/logs/myRotatinglog.log',
+                            'maxFiles => 10,
+                        ],
+                    ],
                 ],
-                RotatingFileHandler::class => [
-                    'path' => '@app/runtime/logs/myRotatinglog.log',
-                    'maxFiles => 10,
-                ]
-            ]
-        ]
-    ]
+            ],
+        ],
+    ...
 ]
 ```
 
@@ -113,18 +115,23 @@ The package supports all official and 3rd party processors for Monolog. It uses 
 The processors can be defined globally for one target or specifically for a handler. Processors are configured with a `processors` key in the config array with an array of callables:
 
 ```php
-'log' => [
-    'targets' => [
-        'class' => MonologTarget::class,
-        'processors' => [
-            GitProcessor::class,
-            function ($record) {
-                $record['myCustomData'] = 'test';
+[
+    ...
+        'monolog' => [
+            'channels' => [
+                'myLoggerChannel => [
+                    'processors' => [
+                        GitProcessor::class,
+                        function ($record) {
+                            $record['myCustomData'] = 'test';
 
-                return $record;
-            },
-        ]
-    ]
+                            return $record;
+                        },
+                    ],
+                ],
+            ],
+        ],
+    ...
 ]
 ```
 
