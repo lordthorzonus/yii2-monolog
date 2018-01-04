@@ -12,6 +12,9 @@ Table of contents
     * [Formatters](#formatters)
     * [Processors](#processors)
     * [Configuring Handlers/Formatters/Processors after creation](#configuring-handlersformattersprocessors-after-creation)
+* [Usage](#usage)
+    * [Using the component as a Yii's log target]()
+    * [Using the component standalone]()
 
 ## Installation
 Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
@@ -196,7 +199,7 @@ For example it's possible to customize `Monolog\Handler\RotatingFileHandler`'s f
 ```php
 'handlers' => [
     RotatingFileHandler::class => [
-        'filename' => 'something',
+        'path' => 'something',
         'maxFiles' => 2,
         'configure' => function (RotatingFileHandler $handler, $config) {
             $handler->setFilenameFormat('myprefix-{filename}-{date}', 'Y-m-d');
@@ -205,4 +208,82 @@ For example it's possible to customize `Monolog\Handler\RotatingFileHandler`'s f
         }
     ],
 ]
+```
+## Usage
+
+### Using the component as a Yii's log target
+
+If you want to integrate this component into an existing project which utilizes heavily Yii's own logger, you can configure channels as log targets easily.
+
+```php
+use leinonen\Yii2Monolog\MonologTarget;
+use leinonen\Yii2Monolog\Yii2Monolog;
+
+[
+    'components' => [
+        ...
+        'monolog' => [
+            'class' => Yii2Monolog::class,
+            'channels' => [
+                'myFirstChannel' => [
+                    ...
+                ],
+                'someOtherAwesomeChannel' => [
+                    ...
+                ],
+            ],
+            'mainChannel' => 'someOtherAwesomeChannel'
+        ],
+        'log' => [
+            'targets' => [
+                [
+                    'class' => MonologTarget::class,
+                    'channel' => 'myFirstChannel,
+                    'levels' => ['error', 'warning']
+                ],
+            ]
+        ]
+    ]
+]
+```
+
+In this case all the Yii's loggers messages will go through the handler / processor stack of `myFirstChannel` logger without touching any of your existing code.
+
+```php
+\Yii::warning('hello');
+\Yii::error('world!');
+```
+
+### Using the component standalone
+
+If you want to not use Yii's logger at all it's possible to use this component as a completely standalone logger.
+
+Fetching a specific logger from the component:
+
+```php
+ $myChannelLogger = Yii::$app->monolog->getLogger('myChannel');
+ $myChannelLogger->critical('help me!');
+
+ $mainChannelLogger = Yii::$app->monolog-getLogger();
+ $mainChannelLogger->notice('This was a log message through the main channel');
+```
+
+As the main channel is registered as the implementation of the `Psr\Log\LoggerInterface`  you can also use constructor dependency injection in your controllers:
+
+```php
+class SuperController
+{
+    private $logger;
+
+    public function __construct($id, $module, LoggerInterface $logger, $config = [])
+    {
+        $this->logger = $logger;
+        parent::__construct($id, $module, $config);
+    }
+
+    public function actionExample()
+    {
+        $this->logger->notice('Action Example was called');
+    }
+}
 ```
