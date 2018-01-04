@@ -2,6 +2,7 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit;
 
+use leinonen\Yii2Monolog\LoggerRegistry;
 use Mockery as m;
 use Monolog\Logger;
 use Psr\Log\LogLevel;
@@ -63,33 +64,13 @@ class MonologTargetTest extends TestCase
      */
     private function getMonologTarget($monologLogger): MonologTarget
     {
-        $handlerConfig = [
-            StreamHandler::class => [
-                'path' => 'something',
-            ],
-        ];
-
-        $processorConfig = [
-            function ($record) {
-                return $record;
-            },
-        ];
-
-        $mockMonologFactory = m::mock(MonologFactory::class);
-        $mockMonologFactory->shouldReceive('make')->withArgs(
-            [
-                'test',
-                $handlerConfig,
-                $processorConfig,
-            ]
-        )->andReturn($monologLogger);
+        $mockLoggerRegistry = m::mock(LoggerRegistry::class);
+        $mockLoggerRegistry->shouldReceive('getLogger')->with('test')->andReturn($monologLogger);
 
         $target = new MonologTarget(
-            $mockMonologFactory,
+            $mockLoggerRegistry,
             [
                 'channel' => 'test',
-                'handlers' => $handlerConfig,
-                'processors' => $processorConfig,
             ]
         );
 

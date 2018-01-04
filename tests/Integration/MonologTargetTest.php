@@ -2,9 +2,11 @@
 
 namespace leinonen\Yii2Monolog\Tests\Integration;
 
+use leinonen\Yii2Monolog\Tests\Helpers\ExampleYii2MonologConfiguration;
+use leinonen\Yii2Monolog\Yii2Monolog;
+use Yii;
 use yii\log\Logger;
 use yii\log\Dispatcher;
-use PHPUnit\Framework\TestCase;
 use Monolog\Handler\TestHandler;
 use Monolog\Formatter\LineFormatter;
 use leinonen\Yii2Monolog\MonologTarget;
@@ -14,8 +16,6 @@ class MonologTargetTest extends TestCase
     /** @test */
     public function it_should_be_a_functioning_yii_log_target()
     {
-        $logger = new Logger();
-
         // We want to access the Test Handler to assert everything works
         // So let's configure it into DI as it's resolved from there
         $handler = new TestHandler();
@@ -23,41 +23,29 @@ class MonologTargetTest extends TestCase
             return $handler;
         });
 
-        $dispatcher = new Dispatcher([
-            'logger' => $logger,
-            'targets' => [
+        $channelName = 'someChannel';
+        $this->mockApplication([
+            'bootstrap' => ['monolog', 'log'],
+            'components' => [
                 'monolog' => [
-                    'class' => MonologTarget::class,
-                    'channel' => 'someChannel',
-                    'handlers' => [
-                        TestHandler::class => [
-                            'formatter' => [
-                                LineFormatter::class => [
-                                    'format' => "myPrefix %channel%.%level_name%: %message% %context% %extra%\n",
-                                ],
-                            ],
-                            'processors' => [
-                                function ($record) {
-                                    $record['context']['specialValue'] = 'special';
-
-                                    return $record;
-                                },
-                            ],
-                        ],
-                    ],
-                    'processors' => [
-                        function ($record) {
-                            $record['extra']['test'] = 'testvalue';
-
-                            return $record;
-                        },
-                        ConfigurableProcessor::class => [
-                            'value' => 'changed value',
-                        ],
+                    'class' => Yii2Monolog::class,
+                    'channels' => [
+                        $channelName => ExampleYii2MonologConfiguration::getConfiguration(),
                     ],
                 ],
-            ],
+                'log' => [
+                    'targets' => [
+                         [
+                            'class' => MonologTarget::class,
+                            'channel' => $channelName,
+                            'levels' => ['error', 'warning']
+                         ],
+                    ]
+        ]
+        ],
         ]);
+
+        $logger = Yii::$app->log->getLogger();
 
         $logger->log('my message', Logger::LEVEL_WARNING);
         $logger->log('second message', Logger::LEVEL_ERROR, 'custom category');
@@ -96,22 +84,5 @@ class MonologTargetTest extends TestCase
         $this->assertContains('myPrefix', $testMessage2['formatted']);
         $this->assertContains('someChannel.ERROR: second message', $testMessage2['formatted']);
         $this->assertContains('{"test":"testvalue"}', $testMessage2['formatted']);
-    }
-}
-
-class ConfigurableProcessor
-{
-    private $value;
-
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
-
-    public function __invoke(array $record)
-    {
-        $record['context']['configuredValue'] = $this->value;
-
-        return $record;
     }
 }

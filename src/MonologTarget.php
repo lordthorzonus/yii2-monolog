@@ -7,7 +7,6 @@ namespace leinonen\Yii2Monolog;
 use Illuminate\Support\Collection;
 use Monolog\Logger;
 use yii\log\Target;
-use leinonen\Yii2Monolog\Factories\MonologFactory;
 
 class MonologTarget extends Target
 {
@@ -17,34 +16,24 @@ class MonologTarget extends Target
     private $logger;
 
     /**
-     * @var array
-     */
-    private $handlers = [];
-
-    /**
-     * @var array
-     */
-    private $processors = [];
-
-    /**
      * @var string
      */
-    private $channel = 'main';
+    private $channel = null;
 
     /**
-     * @var MonologFactory
+     * @var LoggerRegistry
      */
-    private $monologFactory;
+    private $loggerRegistry;
 
     /**
      * Initializes a new MonologTarget.
      *
-     * @param MonologFactory $monologFactory
+     * @param LoggerRegistry $loggerRegistry
      * @param array $config
      */
-    public function __construct(MonologFactory $monologFactory, $config = [])
+    public function __construct(LoggerRegistry $loggerRegistry, $config = [])
     {
-        $this->monologFactory = $monologFactory;
+        $this->loggerRegistry = $loggerRegistry;
         parent::__construct($config);
     }
 
@@ -55,11 +44,7 @@ class MonologTarget extends Target
      */
     public function init()
     {
-        $this->logger = $this->monologFactory->make(
-            $this->channel,
-            $this->handlers,
-            $this->processors
-        );
+        $this->logger = $this->loggerRegistry->getLogger($this->channel);
 
         parent::init();
     }
@@ -74,27 +59,7 @@ class MonologTarget extends Target
         });
     }
 
-    /**
-     * @param array $handlers
-     */
-    public function setHandlers(array $handlers)
-    {
-        $this->handlers = $handlers;
-    }
-
-    /**
-     * @param array $processors
-     */
-    public function setProcessors(array $processors)
-    {
-        $this->processors = $processors;
-    }
-
-    /**
-     * @param string $channel
-     */
-    public function setChannel(string $channel)
-    {
+    public function setChannel(string $channel) {
         $this->channel = $channel;
     }
 
