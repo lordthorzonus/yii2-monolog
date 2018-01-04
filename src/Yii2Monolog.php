@@ -18,14 +18,17 @@ class Yii2Monolog extends Component implements BootstrapInterface
      * @var array
      */
     private $channels;
+
     /**
      * @var MonologFactory
      */
     private $monologFactory;
+
     /**
      * @var string
      */
     private $mainChannel;
+
     /**
      * @var LoggerRegistry
      */

@@ -7,6 +7,7 @@ Table of contents
 * [Monolog Usage](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md)
 * [Installation](#installation)
 * [Configuration](#configuration)
+    * [Channels](#channels)
     * [Handlers](#handlers)
     * [Formatters](#formatters)
     * [Processors](#processors)
@@ -25,6 +26,7 @@ Configure the `leinonen\Yii2Monolog\Yii2Monolog` as a bootstrapped component in 
 Example configuration of one log channel called `myLoggerChannel` with a basic StreamHandler and a UidProcessor:
 ```php
 use leinonen\Yii2Monolog\MonologTarget;
+use leinonen\Yii2Monolog\Yii2Monolog;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
 
@@ -33,6 +35,7 @@ use Monolog\Processor\UidProcessor;
     'components' => [
         ...
         'monolog' => [
+            'class' => Yii2Monolog::class,
             'channels' => [
                 'myLoggerChannel => [
                     'handlers' => [
@@ -50,6 +53,37 @@ use Monolog\Processor\UidProcessor;
     ...
 ]
 ```
+
+### Channels
+To see the core concepts about Monolog channels check the [Offical Documentation for Monolog](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md#core-concepts).
+
+This component allows registering multiple with `channel name` => ` configuration array`  key value pairs in the Monolog components `channels`  configuration key.
+
+#### Main channel
+The component automatically registers a main channel which is used when requesting `Psr\Log\LoggerInterface` from the DI container or when fetching a Logger from the component without specifying the channel name.
+
+The main channel is configurable with configuration key `mainChannel`
+```php
+[
+    'components' => [
+        ...
+        'monolog' => [
+            'class' => Yii2Monolog::class,
+            'channels' => [
+                'myFirstChannel' => [
+                    ...
+                ],
+                'someOtherAwesomeChannel' => [
+                    ...
+                ],
+            ],
+            'mainChannel' => 'someOtherAwesomeChannel'
+        ]
+    ]
+]
+```
+
+If the main channel is null or uncofigured the first channel from the channels list will be used as the main channel.
 
 ### Handlers
 The package supports all official and 3rd party handlers for Monolog. It uses `leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy` by default in background to figure out the config values which the handler is to be constructed with. The handlers are defined with a config key `handlers` in the Monolog configuration. All the handlers are resolved through Yii's DI container making it easier to implement your own custom handlers.
