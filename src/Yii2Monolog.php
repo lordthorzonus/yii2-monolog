@@ -26,16 +26,22 @@ class Yii2Monolog extends Component implements BootstrapInterface
      * @var string
      */
     private $mainChannel;
+    /**
+     * @var LoggerRegistry
+     */
+    private $loggerRegistry;
 
     /**
      * Initiates a new Yii2Monolog.
      *
      * @param MonologFactory $monologFactory
+     * @param LoggerRegistry $loggerRegistry
      * @param array $config
      */
-    public function __construct(MonologFactory $monologFactory, array $config = [])
+    public function __construct(MonologFactory $monologFactory, LoggerRegistry $loggerRegistry, array $config = [])
     {
         $this->monologFactory = $monologFactory;
+        $this->loggerRegistry = $loggerRegistry;
         parent::__construct($config);
     }
 
@@ -52,7 +58,7 @@ class Yii2Monolog extends Component implements BootstrapInterface
             $channel = $this->getMainChannel();
         }
 
-        return Yii::$container->get($this->getLoggerAlias($channel));
+        return $this->loggerRegistry->getLogger($channel);
     }
 
     /**
@@ -90,35 +96,10 @@ class Yii2Monolog extends Component implements BootstrapInterface
             $handlers = $channelConfiguration['handlers'] ?? [];
             $processors = $channelConfiguration['processors'] ?? [];
 
-            $this->registerLogChannel($channelName, $handlers, $processors);
+            $this->loggerRegistry->registerLogChannel($channelName, function () use ($channelName, $handlers, $processors) {
+                return $this->monologFactory->make($channelName, $handlers, $processors);
+            });
         }
-    }
-
-    /**
-     * Registers a new log channel into Yii's DI container.
-     * The channel will be registered with an alias yii2-monolog.ChannelName.
-     *
-     * @param string $channelName
-     * @param array $handlers
-     * @param array $processors
-     */
-    private function registerLogChannel(string $channelName, array $handlers, array $processors)
-    {
-        $serviceName = $this->getLoggerAlias($channelName);
-
-        Yii::$container->setSingleton($serviceName, function () use ($channelName, $handlers, $processors) {
-            return $this->monologFactory->make($channelName, $handlers, $processors);
-        });
-    }
-
-    /**
-     * @param string $channelName
-     *
-     * @return string
-     */
-    private function getLoggerAlias(string $channelName): string
-    {
-        return "yii2-monolog.{$channelName}";
     }
 
     /**
@@ -126,8 +107,8 @@ class Yii2Monolog extends Component implements BootstrapInterface
      */
     private function registerPsrLogger()
     {
-        Yii::$container->setSingleton(LoggerInterface::class, function () {
-           return $this->getLogger($this->getMainChannel());
+        $this->loggerRegistry->registerPsrLogger(function () {
+            return $this->getLogger($this->getMainChannel());
         });
     }
 
