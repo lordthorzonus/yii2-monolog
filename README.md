@@ -13,8 +13,8 @@ Table of contents
     * [Processors](#processors)
     * [Configuring Handlers/Formatters/Processors after creation](#configuring-handlersformattersprocessors-after-creation)
 * [Usage](#usage)
-    * [Using the component as a Yii's log target]()
-    * [Using the component standalone]()
+    * [Using the component as a Yii's log target](#using-the-component-as-a-yiis-log-target)
+    * [Using the component standalone](#using-the-component-standalone)
 
 ## Installation
 Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
@@ -40,7 +40,7 @@ use Monolog\Processor\UidProcessor;
         'monolog' => [
             'class' => Yii2Monolog::class,
             'channels' => [
-                'myLoggerChannel => [
+                'myLoggerChannel' => [
                     'handlers' => [
                         StreamHandler::class => [
                             'path' => '@app/runtime/logs/someLog.log',
@@ -156,7 +156,7 @@ The processors can be defined globally for one target or specifically for a hand
     ...
         'monolog' => [
             'channels' => [
-                'myLoggerChannel => [
+                'myLoggerChannel' => [
                     'processors' => [
                         GitProcessor::class,
                         function ($record) {
@@ -238,7 +238,7 @@ use leinonen\Yii2Monolog\Yii2Monolog;
             'targets' => [
                 [
                     'class' => MonologTarget::class,
-                    'channel' => 'myFirstChannel,
+                    'channel' => 'myFirstChannel',
                     'levels' => ['error', 'warning']
                 ],
             ]
