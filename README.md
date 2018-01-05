@@ -124,7 +124,10 @@ You can find the available handlers from the [Monolog\Handler namespace](https:/
 The package also provides a specific creation strategies for couple of handlers to help integrating with Yii2.
 
 ##### StreamHandler
-The `path` config value is resolved through Yii's `getAlias()` method making it possible to use aliases such as `@app` in the config.
+The `path` config value is resolved through Yii's `getAlias()` method making it possible to use aliases such as `@app` in the config. Use this instead of `stream`
+
+##### RotatingFileHandler
+The `path` config value is resolved through Yii's `getAlias()` method making it possible to use aliases such as `@app` in the config. Use this instead of `filename`
 
 ### Formatters
 The package supports all official and 3rd party formatters for Monolog. It uses `leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy` by default in background to figure out the config values which the formatter is to be constructed with. All the formatters are resolved through Yii's DI container making it easier to implement your own custom formatters.
@@ -205,7 +208,7 @@ For example it's possible to customize `Monolog\Handler\RotatingFileHandler`'s f
         'configure' => function (RotatingFileHandler $handler, $config) {
             $handler->setFilenameFormat('myprefix-{filename}-{date}', 'Y-m-d');
 
-            return $instance;
+            return $handler;
         }
     ],
 ]
@@ -254,6 +257,8 @@ In this case all the Yii's loggers messages will go through the handler / proces
 \Yii::warning('hello');
 \Yii::error('world!');
 ```
+
+If you leave the channel configuration out the target will use the main channel configured in the component.
 
 ### Using the component standalone
 

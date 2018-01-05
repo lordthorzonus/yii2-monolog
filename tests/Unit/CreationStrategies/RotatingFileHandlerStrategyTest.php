@@ -6,8 +6,6 @@ use leinonen\Yii2Monolog\CreationStrategies\RotatingFileHandlerStrategy;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
-use Monolog\Handler\StreamHandler;
-use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
 use ReflectionClass;
 use ReflectionParameter;
 
@@ -103,13 +101,32 @@ class RotatingFileHandlerStrategyTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_a_callable_that_just_returns_the_given_instance_from_configuration_callable()
+    public function it_should_return_a_callable_that_just_returns_the_given_instance_from_configuration_callable_if_no_configuration_key_is_specified()
     {
-        $streamHandler = new RotatingFileHandler('test');
+        $rotatingFileHandler = new RotatingFileHandler('test');
         $strategy = new RotatingFileHandlerStrategy();
 
         $configure = $strategy->getConfigurationCallable([]);
 
-        $this->assertSame($streamHandler, $configure($streamHandler));
+        $this->assertSame($rotatingFileHandler, $configure($rotatingFileHandler));
+    }
+
+    /** @test */
+    public function it_should_return_the_configured_config_callable_if_it_is_defined()
+    {
+        $rotatingFileHandler = new RotatingFileHandler('test');
+        $config = [
+            'configure' => function (RotatingFileHandler $instance) {
+                $instance->setLevel(3249);
+
+                return $instance;
+            }
+        ];
+
+        $strategy = new RotatingFileHandlerStrategy();
+        $configure = $strategy->getConfigurationCallable($config);
+
+        $this->assertSame($rotatingFileHandler, $configure($rotatingFileHandler));
+        $this->assertSame(3249, $rotatingFileHandler->getLevel());
     }
 }

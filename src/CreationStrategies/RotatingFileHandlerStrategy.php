@@ -39,7 +39,7 @@ class RotatingFileHandlerStrategy implements CreationStrategyInterface
      */
     public function getConfigurationCallable(array $config): callable
     {
-        return function (RotatingFileHandler $instance) {
+        return $config['configure'] ?? function ($instance) {
             return $instance;
         };
     }
