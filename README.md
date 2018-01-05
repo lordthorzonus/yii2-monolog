@@ -60,13 +60,14 @@ use Monolog\Processor\UidProcessor;
 ### Channels
 To see the core concepts about Monolog channels check the [Offical Documentation for Monolog](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md#core-concepts).
 
-This component allows registering multiple with `channel name` => ` configuration array`  key value pairs in the Monolog components `channels`  configuration key.
+This component allows registering multiple channels with `channel name` => ` configuration array`  key value pairs with the `channels`  configuration key.
 
 #### Main channel
 The component automatically registers a main channel which is used when requesting `Psr\Log\LoggerInterface` from the DI container or when fetching a Logger from the component without specifying the channel name.
 
 The main channel is configurable with configuration key `mainChannel`
 ```php
+
 [
     'components' => [
         ...
@@ -98,7 +99,7 @@ Example handler configuration with a stack of two handlers:
     ...
         'monolog' => [
             'channels' => [
-                'myLoggerChannel => [
+                'myLoggerChannel' => [
                     'handlers' => [
                         SlackbotHandler::class => [
                             'slackTeam' => 'myTeam',
@@ -107,7 +108,7 @@ Example handler configuration with a stack of two handlers:
                         ],
                         RotatingFileHandler::class => [
                             'path' => '@app/runtime/logs/myRotatinglog.log',
-                            'maxFiles => 10,
+                            'maxFiles' => 10,
                         ],
                     ],
                 ],
