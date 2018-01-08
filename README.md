@@ -35,6 +35,7 @@ use Monolog\Processor\UidProcessor;
 
 ...
 [
+    'bootstrap' => ['monolog'],
     'components' => [
         ...
         'monolog' => [
@@ -87,7 +88,7 @@ The main channel is configurable with configuration key `mainChannel`
 ]
 ```
 
-If the main channel is null or uncofigured the first channel from the channels list will be used as the main channel.
+If the main channel is null or not specified at all, the first channel from the channels list will be used as the main channel. With this config it would be `myFirstChannel`.
 
 ### Handlers
 The package supports all official and 3rd party handlers for Monolog. It uses `leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy` by default in background to figure out the config values which the handler is to be constructed with. The handlers are defined with a config key `handlers` in the Monolog configuration. All the handlers are resolved through Yii's DI container making it easier to implement your own custom handlers.
@@ -217,13 +218,16 @@ For example it's possible to customize `Monolog\Handler\RotatingFileHandler`'s f
 
 ### Using the component as a Yii's log target
 
-If you want to integrate this component into an existing project which utilizes heavily Yii's own logger, you can configure channels as log targets easily.
+If you want to integrate this component into an existing project which utilizes Yii's own logger, you can configure channels as log targets easily. [See Yii's documentation about log targets here](http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html#log-targets).
+
+Example configuration:
 
 ```php
 use leinonen\Yii2Monolog\MonologTarget;
 use leinonen\Yii2Monolog\Yii2Monolog;
 
 [
+    'bootstrap' => ['monolog', 'log'],
     'components' => [
         ...
         'monolog' => [
