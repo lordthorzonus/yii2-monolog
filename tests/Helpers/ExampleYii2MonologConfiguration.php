@@ -1,10 +1,9 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Helpers;
 
-use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\TestHandler;
+use Monolog\Formatter\LineFormatter;
 
 /**
  * An Example Configuration for Yii2Monolog Component which is used in integration tests.

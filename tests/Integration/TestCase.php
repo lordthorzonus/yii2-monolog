@@ -1,11 +1,9 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Integration;
 
-
-use yii\console\Application;
 use yii\di\Container;
+use yii\console\Application;
 use yii\helpers\ArrayHelper;
 
 class TestCase extends \PHPUnit\Framework\TestCase

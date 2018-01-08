@@ -152,6 +152,7 @@ class MonologFactory
             if (\is_int($configKey)) {
                 return $mapFunction($configValue, []);
             }
+
             return $mapFunction($configKey, $configValue);
         })->values()->all();
     }

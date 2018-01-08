@@ -3,11 +3,11 @@
 namespace leinonen\Yii2Monolog\Tests\Unit\HandlerCreationStrategies;
 
 use Monolog\Logger;
+use ReflectionClass;
+use ReflectionParameter;
 use PHPUnit\Framework\TestCase;
 use Monolog\Handler\StreamHandler;
 use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
-use ReflectionClass;
-use ReflectionParameter;
 
 class StreamHandlerStrategyTest extends TestCase
 {

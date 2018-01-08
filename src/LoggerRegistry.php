@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog;
 
-
+use Yii;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Yii;
 
 class LoggerRegistry
 {

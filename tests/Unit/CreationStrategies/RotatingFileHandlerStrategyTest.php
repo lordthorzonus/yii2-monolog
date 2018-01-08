@@ -2,12 +2,12 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit\HandlerCreationStrategies;
 
-use leinonen\Yii2Monolog\CreationStrategies\RotatingFileHandlerStrategy;
-use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionParameter;
+use PHPUnit\Framework\TestCase;
+use Monolog\Handler\RotatingFileHandler;
+use leinonen\Yii2Monolog\CreationStrategies\RotatingFileHandlerStrategy;
 
 class RotatingFileHandlerStrategyTest extends TestCase
 {
@@ -120,7 +120,7 @@ class RotatingFileHandlerStrategyTest extends TestCase
                 $instance->setLevel(3249);
 
                 return $instance;
-            }
+            },
         ];
 
         $strategy = new RotatingFileHandlerStrategy();

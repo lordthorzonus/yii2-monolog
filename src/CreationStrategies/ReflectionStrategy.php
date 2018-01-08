@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-use Illuminate\Support\Collection;
 use ReflectionParameter;
 use InvalidArgumentException;
+use Illuminate\Support\Collection;
 
 class ReflectionStrategy implements CreationStrategyInterface
 {
