@@ -2,12 +2,12 @@
 
 namespace leinonen\Yii2Monolog\Tests\Integration;
 
-use leinonen\Yii2Monolog\Tests\Helpers\ExampleYii2MonologConfiguration;
-use leinonen\Yii2Monolog\Yii2Monolog;
 use Yii;
 use yii\log\Logger;
 use Monolog\Handler\TestHandler;
+use leinonen\Yii2Monolog\Yii2Monolog;
 use leinonen\Yii2Monolog\MonologTarget;
+use leinonen\Yii2Monolog\Tests\Helpers\ExampleYii2MonologConfiguration;
 
 class MonologTargetTest extends TestCase
 {
@@ -17,7 +17,7 @@ class MonologTargetTest extends TestCase
     private $handler;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -43,10 +43,10 @@ class MonologTargetTest extends TestCase
                         [
                             'class' => MonologTarget::class,
                             'channel' => $channelName,
-                            'levels' => ['error', 'warning']
+                            'levels' => ['error', 'warning'],
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ]);
 

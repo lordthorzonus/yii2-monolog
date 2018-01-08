@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace leinonen\Yii2Monolog\CreationStrategies;
 
-use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 
 class RotatingFileHandlerStrategy implements CreationStrategyInterface

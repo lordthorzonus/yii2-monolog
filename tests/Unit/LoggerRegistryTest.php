@@ -1,15 +1,13 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Unit;
 
-
-use leinonen\Yii2Monolog\LoggerRegistry;
-use Monolog\Logger;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
-use yii\di\Container;
 use Mockery as m;
+use Monolog\Logger;
+use yii\di\Container;
+use Psr\Log\LoggerInterface;
+use PHPUnit\Framework\TestCase;
+use leinonen\Yii2Monolog\LoggerRegistry;
 
 class LoggerRegistryTest extends TestCase
 {
@@ -51,7 +49,7 @@ class LoggerRegistryTest extends TestCase
                     $this->assertEquals($closure, $factoryCallable);
 
                     return \is_callable($closure);
-                })
+                }),
             ]);
         $registry->registerLogChannel($channelName, $factoryCallable);
     }
@@ -84,7 +82,7 @@ class LoggerRegistryTest extends TestCase
                     $this->assertEquals($closure, $factoryCallable);
 
                     return \is_callable($closure);
-                })
+                }),
             ]);
         $registry->registerPsrLogger($factoryCallable);
     }

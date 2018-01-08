@@ -1,16 +1,13 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog;
 
-
-use leinonen\Yii2Monolog\Factories\MonologFactory;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
 use Yii;
-use yii\base\Application;
-use yii\base\BootstrapInterface;
+use Monolog\Logger;
 use yii\base\Component;
+use Psr\Log\LoggerInterface;
+use yii\base\BootstrapInterface;
+use leinonen\Yii2Monolog\Factories\MonologFactory;
 
 class Yii2Monolog extends Component implements BootstrapInterface
 {

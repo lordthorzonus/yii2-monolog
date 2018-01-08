@@ -1,15 +1,13 @@
 <?php
 
-
 namespace leinonen\Yii2Monolog\Tests\Integration;
 
-
-use leinonen\Yii2Monolog\Tests\Helpers\ExampleYii2MonologConfiguration;
-use leinonen\Yii2Monolog\Yii2Monolog;
-use Monolog\Handler\TestHandler;
+use Yii;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Yii;
+use Monolog\Handler\TestHandler;
+use leinonen\Yii2Monolog\Yii2Monolog;
+use leinonen\Yii2Monolog\Tests\Helpers\ExampleYii2MonologConfiguration;
 
 class Yii2MonologTest extends TestCase
 {
@@ -28,7 +26,7 @@ class Yii2MonologTest extends TestCase
         // Configure a test handler which can be accessed in tests.
         // It is used in the example configuration and the component should resolve it through DI.
         $this->testHandler = new TestHandler();
-        \Yii::$container->set(TestHandler::class, function ()  {
+        \Yii::$container->set(TestHandler::class, function () {
             return $this->testHandler;
         });
 
@@ -121,7 +119,7 @@ class Yii2MonologTest extends TestCase
         $this->assertInstanceOf(Logger::class, $logger2);
         $this->assertSame($secondChannel, $logger2->getName());
     }
-    
+
     /** @test */
     public function it_can_register_a_main_channel_to_be_used_for_psr_logger_interface()
     {
@@ -138,7 +136,7 @@ class Yii2MonologTest extends TestCase
                         $firstChannel => [],
                         $secondChannel => [],
                     ],
-                    'mainChannel' => $secondChannel
+                    'mainChannel' => $secondChannel,
                 ],
             ],
         ]);
@@ -148,7 +146,7 @@ class Yii2MonologTest extends TestCase
         $this->assertInstanceOf(Logger::class, $logger);
         $this->assertSame($secondChannel, $logger->getName());
     }
-    
+
     /** @test */
     public function it_registers_the_first_channel_implicitly_to_be_used_for_the_psr_logger_interface_if_no_main_channel_is_defined()
     {
@@ -174,7 +172,7 @@ class Yii2MonologTest extends TestCase
                         $firstChannel => [],
                         $secondChannel => [],
                     ],
-                    'mainChannel' => $secondChannel
+                    'mainChannel' => $secondChannel,
                 ],
             ],
         ]);
@@ -184,7 +182,7 @@ class Yii2MonologTest extends TestCase
         $this->assertInstanceOf(Logger::class, $logger);
         $this->assertSame($secondChannel, $logger->getName());
     }
-    
+
     /** @test */
     public function it_configures_the_registered_loggers_correctly()
     {
