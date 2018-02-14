@@ -64,7 +64,7 @@ To see the core concepts about Monolog channels check the [Offical Documentation
 This component allows registering multiple channels with `channel name` => ` configuration array`  key value pairs with the `channels`  configuration key.
 
 #### Main channel
-The component automatically registers a main channel which is used when requesting `Psr\Log\LoggerInterface` from the DI container or when fetching a Logger from the component without specifying the channel name.
+The component automatically registers a main channel which is used when requesting `Psr\Log\LoggerInterface` from the DI container or when fetching a Logger from the component without specifying a channel name.
 
 The main channel is configurable with configuration key `mainChannel`
 ```php
@@ -88,7 +88,7 @@ The main channel is configurable with configuration key `mainChannel`
 ]
 ```
 
-If the main channel is null or not specified at all, the first channel from the channels list will be used as the main channel. With this config it would be `myFirstChannel`.
+If the main channel is null or not specified at all, the first channel from the channels list will be used as the main channel. With the example config above it would be `myFirstChannel`.
 
 ### Handlers
 The package supports all official and 3rd party handlers for Monolog. It uses `leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy` by default in background to figure out the config values which the handler is to be constructed with. The handlers are defined with a config key `handlers` in the Monolog configuration. All the handlers are resolved through Yii's DI container making it easier to implement your own custom handlers.
