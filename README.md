@@ -5,6 +5,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/?branch=master)
 [![Build Status](https://travis-ci.org/lordthorzonus/yii2-monolog.svg?branch=master)](https://travis-ci.org/lordthorzonus/yii2-monolog)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/44a2e0f3-cde6-48b9-b484-8243a64145de/mini.png)](https://insight.sensiolabs.com/projects/44a2e0f3-cde6-48b9-b484-8243a64145de)
 
 ## Yii2 Monolog
 
