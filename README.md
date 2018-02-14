@@ -1,3 +1,11 @@
+[![Latest Stable Version](https://poser.pugx.org/leinonen/yii2-monolog/v/stable)](https://packagist.org/packages/leinonen/yii2-monolog)
+[![Total Downloads](https://poser.pugx.org/leinonen/yii2-monolog/downloads)](https://packagist.org/packages/leinonen/yii2-monolog)
+[![Latest Unstable Version](https://poser.pugx.org/leinonen/yii2-monolog/v/unstable)](https://packagist.org/packages/leinonen/yii2-monolog)
+[![License](https://poser.pugx.org/leinonen/yii2-monolog/license)](https://packagist.org/packages/leinonen/yii2-monolog)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/?branch=master)
+[![Build Status](https://travis-ci.org/lordthorzonus/yii2-monolog.svg?branch=master)](https://travis-ci.org/lordthorzonus/yii2-monolog)
+
 ## Yii2 Monolog
 
 Yii2 Monolog allows one to use [Monolog](https://github.com/Seldaek/monolog) easily with Yii2. For instructions regarding Monolog itself please refer to the [documentation](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md).
