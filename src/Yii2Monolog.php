@@ -48,7 +48,7 @@ class Yii2Monolog extends Component implements BootstrapInterface
     /**
      * Returns the given logger channel.
      *
-     * @param string $channel
+     * @param null|string $channel
      *
      * @return Logger
      */
