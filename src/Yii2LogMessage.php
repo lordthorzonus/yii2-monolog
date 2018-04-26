@@ -6,6 +6,7 @@ namespace leinonen\Yii2Monolog;
 
 use yii\log\Logger;
 use Psr\Log\LogLevel;
+use yii\helpers\VarDumper;
 
 class Yii2LogMessage
 {
@@ -46,7 +47,7 @@ class Yii2LogMessage
      */
     public function __construct(array $message)
     {
-        $this->message = $message[0];
+        $this->setMessage($message[0]);
         $this->yiiLogLevel = $message[1];
 
         if (isset($message[2])) {
@@ -126,5 +127,17 @@ class Yii2LogMessage
         ];
 
         return $psrLevels[$this->yiiLogLevel];
+    }
+
+    private function setMessage($message)
+    {
+        if (! is_string($message)) {
+            if ($message instanceof \Throwable || $message instanceof \Exception) {
+                $message = (string) $message;
+            } else {
+                $message = VarDumper::export($message);
+            }
+        }
+        $this->message = $message;
     }
 }
