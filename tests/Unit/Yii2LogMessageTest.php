@@ -2,9 +2,9 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit;
 
-use yii\helpers\VarDumper;
 use yii\log\Logger;
 use Psr\Log\LogLevel;
+use yii\helpers\VarDumper;
 use PHPUnit\Framework\TestCase;
 use leinonen\Yii2Monolog\Yii2LogMessage;
 
@@ -106,7 +106,7 @@ class Yii2LogMessageTest extends TestCase
         $runTimeException = new \RuntimeException('a runtime exception');
         $expectedArrayOutput = VarDumper::export(['an array as the log message']);
         $expectedMultiLevelArrayOutput = VarDumper::export([
-            'an array as the log message' => ['with' => ['nested' => 'arrays']]
+            'an array as the log message' => ['with' => ['nested' => 'arrays']],
         ]);
 
         $messagesAndTheirExpectedResultsMap = [
@@ -135,7 +135,6 @@ class Yii2LogMessageTest extends TestCase
                 123,
             ],
         ];
-
 
         foreach ($messagesAndTheirExpectedResultsMap as $expectedMessage => $yiisMessage) {
             $logMessage = new Yii2LogMessage($yiisMessage);
