@@ -35,7 +35,7 @@ composer require leinonen/yii2-monolog
 ## Configuration
 Configure the `leinonen\Yii2Monolog\Yii2Monolog` as a bootstrapped component in your application config.
 
-Example configuration of one log channel called `myLoggerChannel` with a basic StreamHandler and a UidProcessor:
+An example configuration of one log channel called `myLoggerChannel` with a basic StreamHandler and a UidProcessor:
 ```php
 use leinonen\Yii2Monolog\MonologTarget;
 use leinonen\Yii2Monolog\Yii2Monolog;
@@ -75,7 +75,7 @@ This component allows registering multiple channels with `channel name` => ` con
 #### Main channel
 The component automatically registers a main channel which is used when requesting `Psr\Log\LoggerInterface` from the DI container or when fetching a Logger from the component without specifying a channel name.
 
-The main channel is configurable with configuration key `mainChannel`
+The main channel is configurable with the configuration key `mainChannel`
 ```php
 
 [
@@ -283,11 +283,11 @@ Fetching a specific logger from the component:
  $myChannelLogger = Yii::$app->monolog->getLogger('myChannel');
  $myChannelLogger->critical('help me!');
 
- $mainChannelLogger = Yii::$app->monolog-getLogger();
+ $mainChannelLogger = Yii::$app->monolog->getLogger();
  $mainChannelLogger->notice('This was a log message through the main channel');
 ```
 
-As the main channel is registered as the implementation of the `Psr\Log\LoggerInterface`  you can also use constructor dependency injection in your controllers:
+As the main channel is registered as the implementation of the `Psr\Log\LoggerInterface`  you can also use constructor injection in your controllers:
 
 ```php
 class SuperController
