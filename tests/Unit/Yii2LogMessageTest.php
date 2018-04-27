@@ -2,6 +2,7 @@
 
 namespace leinonen\Yii2Monolog\Tests\Unit;
 
+use yii\helpers\VarDumper;
 use yii\log\Logger;
 use Psr\Log\LogLevel;
 use PHPUnit\Framework\TestCase;
@@ -97,6 +98,50 @@ class Yii2LogMessageTest extends TestCase
                 LogLevel::DEBUG,
             ],
         ];
+    }
+
+    /** @test */
+    public function yiis_messages_can_be_also_arrays_or_exceptions_instead_of_plain_strings()
+    {
+        $runTimeException = new \RuntimeException('a runtime exception');
+        $expectedArrayOutput = VarDumper::export(['an array as the log message']);
+        $expectedMultiLevelArrayOutput = VarDumper::export([
+            'an array as the log message' => ['with' => ['nested' => 'arrays']]
+        ]);
+
+        $messagesAndTheirExpectedResultsMap = [
+            (string) $runTimeException => [
+                $runTimeException,
+                Logger::LEVEL_ERROR,
+                'application',
+                10,
+                $this->getDummyStackTrace(),
+                123,
+            ],
+            $expectedArrayOutput => [
+                ['an array as the log message'],
+                Logger::LEVEL_ERROR,
+                'application',
+                10,
+                $this->getDummyStackTrace(),
+                123,
+            ],
+            $expectedMultiLevelArrayOutput => [
+                ['an array as the log message' => ['with' => ['nested' => 'arrays']]],
+                Logger::LEVEL_ERROR,
+                'application',
+                10,
+                $this->getDummyStackTrace(),
+                123,
+            ],
+        ];
+
+
+        foreach ($messagesAndTheirExpectedResultsMap as $expectedMessage => $yiisMessage) {
+            $logMessage = new Yii2LogMessage($yiisMessage);
+
+            $this->assertSame($expectedMessage, $logMessage->getMessage());
+        }
     }
 
     /**

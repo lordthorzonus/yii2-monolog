@@ -5,7 +5,6 @@ namespace leinonen\Yii2Monolog;
 use Yii;
 use Monolog\Logger;
 use yii\base\Component;
-use Psr\Log\LoggerInterface;
 use yii\base\BootstrapInterface;
 use leinonen\Yii2Monolog\Factories\MonologFactory;
 

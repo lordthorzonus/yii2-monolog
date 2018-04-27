@@ -129,15 +129,30 @@ class Yii2LogMessage
         return $psrLevels[$this->yiiLogLevel];
     }
 
+    /**
+     * @param array|\Throwable|string $message
+     */
     private function setMessage($message)
     {
-        if (! is_string($message)) {
-            if ($message instanceof \Throwable || $message instanceof \Exception) {
-                $message = (string) $message;
-            } else {
-                $message = VarDumper::export($message);
-            }
+        if (! \is_string($message)) {
+            $message = $this->convertYiisMessageToString($message);
         }
         $this->message = $message;
+    }
+
+    /**
+     * Converts Yii's message to string format.
+     *
+     * @param array|\Throwable $message
+     *
+     * @return string
+     */
+    private function convertYiisMessageToString($message): string
+    {
+        if ($message instanceof \Throwable || $message instanceof \Exception) {
+            return (string) $message;
+        }
+
+        return VarDumper::export($message);
     }
 }
