@@ -143,6 +143,25 @@ class Yii2LogMessageTest extends TestCase
         }
     }
 
+    /** @test */
+    public function exceptions_can_be_extracted_to_monolog_context()
+    {
+        $runTimeException = new \RuntimeException('a runtime exception');
+        $message = [
+            $runTimeException,
+            Logger::LEVEL_ERROR,
+            'application',
+            10,
+            $this->getDummyStackTrace(),
+            123,
+        ];
+        $logMessage = new Yii2LogMessage($message, true);
+
+        $this->assertEquals('RuntimeException: a runtime exception', $logMessage->getMessage());
+        $this->assertEquals($runTimeException, $logMessage->getException());
+        $this->assertArrayHasKey('exception', $logMessage->getContext());
+    }
+
     /**
      * @return array
      */

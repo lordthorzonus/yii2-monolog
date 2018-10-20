@@ -44,6 +44,14 @@ class MonologTargetTest extends TestCase
                             'class' => MonologTarget::class,
                             'channel' => $channelName,
                             'levels' => ['error', 'warning'],
+                            'except' => ['sentry'],
+                        ],
+                        [
+                            'class' => MonologTarget::class,
+                            'channel' => $channelName,
+                            'levels' => ['error'],
+                            'categories' => ['sentry'],
+                            'extractExceptionsToContext' => true,
                         ],
                     ],
                 ],
@@ -95,5 +103,20 @@ class MonologTargetTest extends TestCase
         $this->assertContains('myPrefix', $testMessage2['formatted']);
         $this->assertContains('someChannel.ERROR: second message', $testMessage2['formatted']);
         $this->assertContains('{"test":"testvalue"}', $testMessage2['formatted']);
+    }
+
+    /** @test */
+    public function it_should_be_able_to_extract_exceptions_into_context()
+    {
+        $logger = Yii::$app->log->getLogger();
+        $exception = new \RuntimeException('Boom!');
+
+        $logger->log($exception, Logger::LEVEL_ERROR, 'sentry');
+        $logger->flush(true);
+
+        $logMessage = $this->handler->getRecords()[0];
+
+        $this->assertEquals('RuntimeException: Boom!', $logMessage['message']);
+        $this->assertEquals($exception, $logMessage['context']['exception']);
     }
 }

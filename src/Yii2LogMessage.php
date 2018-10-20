@@ -41,13 +41,25 @@ class Yii2LogMessage
     private $yiiLogLevel;
 
     /**
+     * @var \Throwable|null
+     */
+    private $exception;
+
+    /**
      * Initializes a new Yii2LogMessage.
      *
      * @param array $message
+     * @param bool $exceptionInContext
      */
-    public function __construct(array $message)
+    public function __construct(array $message, bool $exceptionInContext = false)
     {
-        $this->setMessage($message[0]);
+        if (true === $exceptionInContext && $message[0] instanceof \Throwable) {
+            $this->exception = $message[0];
+            $this->setMessage(\get_class($message[0]) . ': ' . $message[0]->getMessage());
+        } else {
+            $this->setMessage($message[0]);
+        }
+
         $this->yiiLogLevel = $message[1];
 
         if (isset($message[2])) {
@@ -86,6 +98,14 @@ class Yii2LogMessage
     }
 
     /**
+     * @return null|\Throwable
+     */
+    public function getException()
+    {
+        return $this->exception;
+    }
+
+    /**
      * Returns the context for the Yii2LogMessage.
      *
      * @return array
@@ -104,6 +124,10 @@ class Yii2LogMessage
 
         if ($this->memory !== null) {
             $context['memory'] = $this->memory;
+        }
+
+        if ($this->exception !== null) {
+            $context['exception'] = $this->exception;
         }
 
         return $context;

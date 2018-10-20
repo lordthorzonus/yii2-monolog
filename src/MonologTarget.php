@@ -11,6 +11,11 @@ use Illuminate\Support\Collection;
 class MonologTarget extends Target
 {
     /**
+     * @var bool Determines if exceptions (passed as first element in log record array) should be extracted.
+     */
+    public $extractExceptionsToContext = false;
+
+    /**
      * @var Logger
      */
     private $logger;
@@ -72,7 +77,7 @@ class MonologTarget extends Target
     private function getMessages(): Collection
     {
         return collect($this->messages)->map(function ($message) {
-            return new Yii2LogMessage($message);
+            return new Yii2LogMessage($message, $this->extractExceptionsToContext);
         });
     }
 }
