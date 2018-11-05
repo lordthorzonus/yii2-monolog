@@ -44,14 +44,6 @@ class MonologTargetTest extends TestCase
                             'class' => MonologTarget::class,
                             'channel' => $channelName,
                             'levels' => ['error', 'warning'],
-                            'except' => ['sentry'],
-                        ],
-                        [
-                            'class' => MonologTarget::class,
-                            'channel' => $channelName,
-                            'levels' => ['error'],
-                            'categories' => ['sentry'],
-                            'extractExceptionsToContext' => true,
                         ],
                     ],
                 ],
@@ -106,12 +98,12 @@ class MonologTargetTest extends TestCase
     }
 
     /** @test */
-    public function it_should_be_able_to_extract_exceptions_into_context()
+    public function it_should_extract_exceptions_into_context()
     {
         $logger = Yii::$app->log->getLogger();
         $exception = new \RuntimeException('Boom!');
 
-        $logger->log($exception, Logger::LEVEL_ERROR, 'sentry');
+        $logger->log($exception, Logger::LEVEL_ERROR, 'exceptions');
         $logger->flush(true);
 
         $logMessage = $this->handler->getRecords()[0];

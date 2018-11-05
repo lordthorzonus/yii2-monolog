@@ -49,16 +49,10 @@ class Yii2LogMessage
      * Initializes a new Yii2LogMessage.
      *
      * @param array $message
-     * @param bool $exceptionInContext
      */
-    public function __construct(array $message, bool $exceptionInContext = false)
+    public function __construct(array $message)
     {
-        if (true === $exceptionInContext && $message[0] instanceof \Throwable) {
-            $this->exception = $message[0];
-            $this->setMessage(\get_class($message[0]) . ': ' . $message[0]->getMessage());
-        } else {
-            $this->setMessage($message[0]);
-        }
+        $this->setMessage($message[0]);
 
         $this->yiiLogLevel = $message[1];
 
@@ -158,10 +152,9 @@ class Yii2LogMessage
      */
     private function setMessage($message)
     {
-        if (! \is_string($message)) {
-            $message = $this->convertYiisMessageToString($message);
-        }
-        $this->message = $message;
+        $this->message = ! \is_string($message)
+            ? $this->convertYiisMessageToString($message)
+            : $message;
     }
 
     /**
@@ -173,8 +166,10 @@ class Yii2LogMessage
      */
     private function convertYiisMessageToString($message): string
     {
-        if ($message instanceof \Throwable || $message instanceof \Exception) {
-            return (string) $message;
+        if ($message instanceof \Throwable) {
+            $this->exception = $message;
+
+            return \get_class($message) . ': ' . $message->getMessage();
         }
 
         return VarDumper::export($message);

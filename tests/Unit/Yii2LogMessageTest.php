@@ -101,23 +101,14 @@ class Yii2LogMessageTest extends TestCase
     }
 
     /** @test */
-    public function yiis_messages_can_be_also_arrays_or_exceptions_instead_of_plain_strings()
+    public function yiis_messages_can_be_also_arrays_instead_of_plain_strings()
     {
-        $runTimeException = new \RuntimeException('a runtime exception');
         $expectedArrayOutput = VarDumper::export(['an array as the log message']);
         $expectedMultiLevelArrayOutput = VarDumper::export([
             'an array as the log message' => ['with' => ['nested' => 'arrays']],
         ]);
 
         $messagesAndTheirExpectedResultsMap = [
-            (string) $runTimeException => [
-                $runTimeException,
-                Logger::LEVEL_ERROR,
-                'application',
-                10,
-                $this->getDummyStackTrace(),
-                123,
-            ],
             $expectedArrayOutput => [
                 ['an array as the log message'],
                 Logger::LEVEL_ERROR,
@@ -144,7 +135,7 @@ class Yii2LogMessageTest extends TestCase
     }
 
     /** @test */
-    public function exceptions_can_be_extracted_to_monolog_context()
+    public function exceptions_are_extracted_to_monolog_context()
     {
         $runTimeException = new \RuntimeException('a runtime exception');
         $message = [
@@ -155,7 +146,7 @@ class Yii2LogMessageTest extends TestCase
             $this->getDummyStackTrace(),
             123,
         ];
-        $logMessage = new Yii2LogMessage($message, true);
+        $logMessage = new Yii2LogMessage($message);
 
         $this->assertEquals('RuntimeException: a runtime exception', $logMessage->getMessage());
         $this->assertEquals($runTimeException, $logMessage->getException());
