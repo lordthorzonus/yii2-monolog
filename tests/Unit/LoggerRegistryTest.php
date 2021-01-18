@@ -16,14 +16,14 @@ class LoggerRegistryTest extends TestCase
      */
     private $mockedContainer;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockedContainer = m::mock(Container::class);
         \Yii::$container = $this->mockedContainer;
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
         \Yii::$container = new Container();

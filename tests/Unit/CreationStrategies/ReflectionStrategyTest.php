@@ -9,7 +9,7 @@ use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
 
 class ReflectionStrategyTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
         parent::tearDown();
@@ -156,11 +156,13 @@ class ReflectionStrategyTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected to find key: 'required1' in the given config array but none found.
+     *
+     *
      */
     public function it_should_throw_an_exception_if_the_required_parameters_are_not_given_in_the_config_array()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Expected to find key: 'required1' in the given config array but none found.");
         $config = [];
 
         $strategy = new ReflectionStrategy(OneRequiredParameter::class);

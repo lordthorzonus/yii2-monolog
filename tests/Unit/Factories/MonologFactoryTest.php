@@ -32,7 +32,7 @@ class MonologFactoryTest extends TestCase
      */
     private $mockFormatterFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mockHandlerFactory = m::mock(HandlerFactory::class);
         $this->mockProcessorFactory = m::mock(ProcessorFactory::class);
@@ -41,7 +41,7 @@ class MonologFactoryTest extends TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();

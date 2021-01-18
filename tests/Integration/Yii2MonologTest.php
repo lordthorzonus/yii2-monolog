@@ -21,7 +21,7 @@ class Yii2MonologTest extends TestCase
      */
     private $channelName;
 
-    public function setUp()
+    public function setUp(): void
     {
         // Configure a test handler which can be accessed in tests.
         // It is used in the example configuration and the component should resolve it through DI.
@@ -197,17 +197,17 @@ class Yii2MonologTest extends TestCase
         $this->assertSame($this->channelName, $testMessage1['channel']);
         $this->assertSame('special', $testMessage1['context']['specialValue']);
         $this->assertSame('changed value', $testMessage1['context']['configuredValue']);
-        $this->assertContains('myPrefix', $testMessage1['formatted']);
-        $this->assertContains("{$this->channelName}.WARNING: my message", $testMessage1['formatted']);
-        $this->assertContains('{"test":"testvalue"}', $testMessage1['formatted']);
+        $this->assertStringContainsString('myPrefix', $testMessage1['formatted']);
+        $this->assertStringContainsString("{$this->channelName}.WARNING: my message", $testMessage1['formatted']);
+        $this->assertStringContainsString('{"test":"testvalue"}', $testMessage1['formatted']);
 
         $testMessage2 = $this->testHandler->getRecords()[1];
         $this->assertSame('second message', $testMessage2['message']);
         $this->assertSame($this->channelName, $testMessage2['channel']);
         $this->assertSame('special', $testMessage2['context']['specialValue']);
         $this->assertSame('changed value', $testMessage2['context']['configuredValue']);
-        $this->assertContains('myPrefix', $testMessage2['formatted']);
-        $this->assertContains("{$this->channelName}.ERROR: second message", $testMessage2['formatted']);
-        $this->assertContains('{"test":"testvalue"}', $testMessage2['formatted']);
+        $this->assertStringContainsString('myPrefix', $testMessage2['formatted']);
+        $this->assertStringContainsString("{$this->channelName}.ERROR: second message", $testMessage2['formatted']);
+        $this->assertStringContainsString('{"test":"testvalue"}', $testMessage2['formatted']);
     }
 }
