@@ -1,6 +1,6 @@
 <?php
 
-namespace leinonen\Yii2Monolog\Factories;
+namespace bessonov87\Yii2Monolog\Factories;
 
 class ProcessorFactory
 {

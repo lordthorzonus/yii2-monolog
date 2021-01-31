@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace leinonen\Yii2Monolog;
+namespace bessonov87\Yii2Monolog;
 
 use Monolog\Logger;
 use yii\log\Target;

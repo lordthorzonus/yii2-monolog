@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace leinonen\Yii2Monolog\CreationStrategies;
+namespace bessonov87\Yii2Monolog\CreationStrategies;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
