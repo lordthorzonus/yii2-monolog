@@ -1,5 +1,5 @@
 {
-    "name": "leinonen/yii2-monolog",
+    "name": "bessonov87/yii2-monolog",
     "type": "yii2-extension",
     "description": "Monolog extension for Yii2",
     "license": "MIT",
@@ -21,12 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "leinonen\\Yii2Monolog\\": "src/"
+            "bessonov87\\Yii2Monolog\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "leinonen\\Yii2Monolog\\Tests\\": "tests/"
+            "bessonov87\\Yii2Monolog\\Tests\\": "tests/"
         }
     },
     "repositories": [

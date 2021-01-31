@@ -1,13 +1,13 @@
 <?php
 
-namespace leinonen\Yii2Monolog\Factories;
+namespace bessonov87\Yii2Monolog\Factories;
 
 use Yii;
 use yii\base\InvalidConfigException;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Formatter\FormatterInterface;
-use leinonen\Yii2Monolog\CreationStrategies\StrategyResolver;
-use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
+use bessonov87\Yii2Monolog\CreationStrategies\StrategyResolver;
+use bessonov87\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
 
 class GenericStrategyBasedFactory
 {

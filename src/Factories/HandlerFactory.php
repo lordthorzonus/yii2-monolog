@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace leinonen\Yii2Monolog\Factories;
+namespace bessonov87\Yii2Monolog\Factories;
 
 use Monolog\Handler\HandlerInterface;
 use Monolog\Formatter\FormatterInterface;

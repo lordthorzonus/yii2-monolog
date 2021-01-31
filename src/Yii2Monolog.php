@@ -1,12 +1,12 @@
 <?php
 
-namespace leinonen\Yii2Monolog;
+namespace bessonov87\Yii2Monolog;
 
 use Yii;
 use Monolog\Logger;
 use yii\base\Component;
 use yii\base\BootstrapInterface;
-use leinonen\Yii2Monolog\Factories\MonologFactory;
+use bessonov87\Yii2Monolog\Factories\MonologFactory;
 
 class Yii2Monolog extends Component implements BootstrapInterface
 {

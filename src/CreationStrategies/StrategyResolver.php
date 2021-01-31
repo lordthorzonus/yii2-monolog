@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace leinonen\Yii2Monolog\CreationStrategies;
+namespace bessonov87\Yii2Monolog\CreationStrategies;
 
 class StrategyResolver
 {
-    const CREATION_STRATEGY_NAMESPACE = 'leinonen\Yii2Monolog\CreationStrategies';
+    const CREATION_STRATEGY_NAMESPACE = 'bessonov87\Yii2Monolog\CreationStrategies';
 
     /**
      * Returns creation strategy to be used for given class name.
