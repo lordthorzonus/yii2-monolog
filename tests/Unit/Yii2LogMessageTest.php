@@ -148,7 +148,7 @@ class Yii2LogMessageTest extends TestCase
         ];
         $logMessage = new Yii2LogMessage($message);
 
-        $this->assertEquals('RuntimeException: a runtime exception', $logMessage->getMessage());
+        $this->assertSame('RuntimeException: a runtime exception', $logMessage->getMessage());
         $this->assertEquals($runTimeException, $logMessage->getException());
         $this->assertArrayHasKey('exception', $logMessage->getContext());
     }
@@ -158,14 +158,12 @@ class Yii2LogMessageTest extends TestCase
      */
     private function getDummyStackTrace()
     {
-        $trace = [
+        return [
             'file' => __FILE__,
             'line' => 62,
             'function' => 'log',
             'class' => Logger::class,
             'type' => '->',
         ];
-
-        return $trace;
     }
 }

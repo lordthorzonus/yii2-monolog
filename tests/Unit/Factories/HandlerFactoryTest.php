@@ -14,7 +14,7 @@ use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 
 class HandlerFactoryTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
@@ -47,11 +47,15 @@ class HandlerFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage leinonen\Yii2Monolog\Yii2LogMessage doesn't implement Monolog\Handler\HandlerInterface
+     *
+     *
      */
     public function it_should_throw_an_exception_if_the_given_class_name_doesnt_implement_handler_interface()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            "leinonen\Yii2Monolog\Yii2LogMessage doesn't implement Monolog\Handler\HandlerInterface"
+        );
         $mockGenericFactory = m::mock(GenericStrategyBasedFactory::class);
         $factory = new HandlerFactory($mockGenericFactory);
         $factory->make(Yii2LogMessage::class);

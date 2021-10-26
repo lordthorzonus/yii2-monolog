@@ -11,7 +11,7 @@ use leinonen\Yii2Monolog\LoggerRegistry;
 
 class MonologTargetTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
@@ -65,13 +65,11 @@ class MonologTargetTest extends TestCase
         $mockLoggerRegistry = m::mock(LoggerRegistry::class);
         $mockLoggerRegistry->shouldReceive('getLogger')->with('test')->andReturn($monologLogger);
 
-        $target = new MonologTarget(
+        return new MonologTarget(
             $mockLoggerRegistry,
             [
                 'channel' => 'test',
             ]
         );
-
-        return $target;
     }
 }
